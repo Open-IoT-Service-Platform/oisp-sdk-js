@@ -23,21 +23,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
 
-var ConnectionOptions = require('./iot.connection.def.js');
-var GET_METHOD = 'GET';
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
-var apiconf = config.connector.rest;
 //variable to be returned
 var IoTKiT = {};
-/**
- */
+
 function CatalogOption(data) {
-    this.pathname = apiconf.path.cmpcatalog.catalog;
+    this.pathname = api.cmpcatalog.CATALOG;
     this.token = data.deviceToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
 }
 CatalogOption.prototype = new ConnectionOptions();
 CatalogOption.prototype.constructor = CatalogOption;

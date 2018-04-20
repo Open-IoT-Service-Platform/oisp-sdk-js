@@ -23,27 +23,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
+
 var common = require('../../lib/common');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-
-var GET_METHOD = 'GET';
-var PUT_METHOD = 'PUT';
-var POST_METHOD = 'POST';
-var DELETE_METHOD = 'DELETE';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
 
 
 function GetUserInfoOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.userId, data.userId);
+    this.pathname = common.buildPath(api.user.GET, data.userId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetUserInfoOption.prototype = new ConnectionOptions();
@@ -52,10 +45,10 @@ IoTKiT.GetUserInfoOption = GetUserInfoOption;
 
 
 function UpdateUserInfoOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.userId, data.userId);
+    this.pathname = common.buildPath(api.user.GET, data.userId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 UpdateUserInfoOption.prototype = new ConnectionOptions();
@@ -64,10 +57,10 @@ IoTKiT.UpdateUserInfoOption = UpdateUserInfoOption;
 
 
 function DeleteUserOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.userId, data.deleteUserId);
+    this.pathname = common.buildPath(api.user.GET, data.deleteUserId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body = null;
 }
 DeleteUserOption.prototype = new ConnectionOptions();
@@ -76,9 +69,9 @@ IoTKiT.DeleteUserOption = DeleteUserOption;
 
 
 function RequestUserPasswordChangeOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.forgotPassword);
+    this.pathname = common.buildPath(api.user.FORGOT_PASSWORD);
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 RequestUserPasswordChangeOption.prototype = new ConnectionOptions();
@@ -87,9 +80,9 @@ IoTKiT.RequestUserPasswordChangeOption = RequestUserPasswordChangeOption;
 
 
 function UpdateUserPasswordOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.forgotPassword);
+    this.pathname = common.buildPath(api.user.FORGOT_PASSWORD);
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 UpdateUserPasswordOption.prototype = new ConnectionOptions();
@@ -98,10 +91,10 @@ IoTKiT.UpdateUserPasswordOption = UpdateUserPasswordOption;
 
 
 function ChangeUserPasswordOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.changePassword, data.username);
+    this.pathname = common.buildPath(api.user.CHANGE_PASSWORD, data.username);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 ChangeUserPasswordOption.prototype = new ConnectionOptions();
@@ -110,9 +103,9 @@ IoTKiT.ChangeUserPasswordOption = ChangeUserPasswordOption;
 
 
 function RequestUserActivationOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.requestUserActivation);
+    this.pathname = common.buildPath(api.user.REQUEST_ACTIVATION);
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 RequestUserActivationOption.prototype = new ConnectionOptions();
@@ -121,9 +114,9 @@ IoTKiT.RequestUserActivationOption = RequestUserActivationOption;
 
 
 function AddUserOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.addUser);
+    this.pathname = common.buildPath(api.user.ADD);
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 AddUserOption.prototype = new ConnectionOptions();
@@ -132,14 +125,13 @@ IoTKiT.AddUserOption = AddUserOption;
 
 
 function ActivateUserOption(data) {
-    this.pathname = common.buildPath(apiconf.path.user.activateUser);
+    this.pathname = common.buildPath(api.user.ACTIVATE);
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 ActivateUserOption.prototype = new ConnectionOptions();
 ActivateUserOption.prototype.contstructor = ActivateUserOption;
 IoTKiT.ActivateUserOption = ActivateUserOption;
-
 
 module.exports = IoTKiT;

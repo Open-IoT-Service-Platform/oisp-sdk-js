@@ -23,24 +23,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
+
 var common = require('../../lib/common');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-
-var POST_METHOD = 'POST';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
 
-
 function SubmitDataOption(data) {
-    this.pathname = common.buildPath(apiconf.path.data.send, data.deviceId);
+    this.pathname = common.buildPath(api.data.SEND, data.deviceId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body =  JSON.stringify(data.body);
 }
 SubmitDataOption.prototype = new ConnectionOptions();
@@ -49,10 +44,10 @@ IoTKiT.SubmitDataOption = SubmitDataOption;
 
 
 function SearchDataOption(data) {
-    this.pathname = common.buildPath(apiconf.path.data.search, data.accountId);
+    this.pathname = common.buildPath(api.data.SEARCH, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body =  JSON.stringify(data.body);
 }
 SearchDataOption.prototype = new ConnectionOptions();
@@ -61,10 +56,10 @@ IoTKiT.SearchDataOption = SearchDataOption;
 
 
 function SearchDataAdvancedOption(data) {
-    this.pathname = common.buildPath(apiconf.path.data.advanced, data.accountId);
+    this.pathname = common.buildPath(api.data.SEARCH_ADVANCED, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body =  JSON.stringify(data.body);
 }
 SearchDataAdvancedOption.prototype = new ConnectionOptions();

@@ -23,27 +23,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
+
 var common = require('../../lib/common');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-
-var GET_METHOD = 'GET';
-var PUT_METHOD = 'PUT';
-var POST_METHOD = 'POST';
-var DELETE_METHOD = 'DELETE';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
 
-
 function GetDevicesOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.getall, data.accountId);
+    this.pathname = common.buildPath(api.device.GET_ALL, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body =  null;
 }
 GetDevicesOption.prototype = new ConnectionOptions();
@@ -52,10 +44,10 @@ IoTKiT.GetDevicesOption = GetDevicesOption;
 
 
 function CreateDeviceOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.getall, data.accountId);
+    this.pathname = common.buildPath(api.device.GET_ALL, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 CreateDeviceOption.prototype = new ConnectionOptions();
@@ -64,10 +56,10 @@ IoTKiT.CreateDeviceOption = CreateDeviceOption;
 
 
 function GetDeviceDetailsOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.getdetails, [data.accountId, data.deviceId]);
+    this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body =  null;
 }
 GetDeviceDetailsOption.prototype = new ConnectionOptions();
@@ -76,10 +68,10 @@ IoTKiT.GetDeviceDetailsOption = GetDeviceDetailsOption;
 
 
 function UpdateDeviceDetailsOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.getdetails, [data.accountId, data.deviceId]);
+    this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 UpdateDeviceDetailsOption.prototype = new ConnectionOptions();
@@ -88,10 +80,10 @@ IoTKiT.UpdateDeviceDetailsOption = UpdateDeviceDetailsOption;
 
 
 function DeleteDeviceOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.getdetails, [data.accountId, data.deviceId]);
+    this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body =  null;
 }
 DeleteDeviceOption.prototype = new ConnectionOptions();
@@ -100,10 +92,10 @@ IoTKiT.DeleteDeviceOption = DeleteDeviceOption;
 
 
 function ActivateDeviceOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.act_full, [data.accountId, data.deviceId]);
+    this.pathname = common.buildPath(api.device.ACTIVATE_FULL, [data.accountId, data.deviceId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 ActivateDeviceOption.prototype = new ConnectionOptions();
@@ -112,10 +104,10 @@ IoTKiT.ActivateDeviceOption = ActivateDeviceOption;
 
 
 function AddDeviceComponentOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.components_full, [data.accountId, data.deviceId]);
+    this.pathname = common.buildPath(api.device.COMPONENTS_FULL, [data.accountId, data.deviceId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 AddDeviceComponentOption.prototype = new ConnectionOptions();
@@ -124,10 +116,10 @@ IoTKiT.AddDeviceComponentOption = AddDeviceComponentOption;
 
 
 function DeleteDeviceComponentOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.components_delete, [data.accountId, data.deviceId, data.cid]);
+    this.pathname = common.buildPath(api.device.COMPONENTS_DELETE, [data.accountId, data.deviceId, data.cid]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body = null;
 }
 DeleteDeviceComponentOption.prototype = new ConnectionOptions();
@@ -135,17 +127,11 @@ DeleteDeviceComponentOption.prototype.constructor = DeleteDeviceComponentOption;
 IoTKiT.DeleteDeviceComponentOption = DeleteDeviceComponentOption;
 
 
-
-
-
-/**
- * Connection attributes to redirect to Intel Itendtity Main Page
- */
 function DeviceActivateOption(data) {
-    this.pathname = common.buildPath(apiconf.path.device.act, data.deviceId);
+    this.pathname = common.buildPath(api.device.ACTIVATE, data.deviceId);
     this.token = null;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body =  JSON.stringify(data.body);
 }
 DeviceActivateOption.prototype = new ConnectionOptions();
@@ -153,12 +139,11 @@ DeviceActivateOption.prototype.constructor = DeviceActivateOption;
 IoTKiT.DeviceActivateOption = DeviceActivateOption;
 
 
-
 function DeviceGetOption (data) {
-    this.pathname = common.buildPath(apiconf.path.device.get, data.deviceId);
+    this.pathname = common.buildPath(api.device.GET, data.deviceId);
     this.token = data.deviceToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
 
 }
 DeviceGetOption.prototype = new ConnectionOptions();
@@ -166,27 +151,28 @@ DeviceGetOption.prototype.constructor = DeviceGetOption;
 IoTKiT.DeviceGetOption = DeviceGetOption;
 
 
-
 function DeviceMetadataOption (data) {
-    this.pathname = common.buildPath(apiconf.path.device.update, data.deviceId);
+    this.pathname = common.buildPath(api.device.UPDATE, data.deviceId);
     this.token = data.deviceToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 DeviceMetadataOption.prototype = new ConnectionOptions();
 DeviceMetadataOption.prototype.constructor = DeviceMetadataOption;
 IoTKiT.DeviceMetadataOption = DeviceMetadataOption;
+
+
 /**
  * Build an object option for Request package.
  * @param data
  * @constructor
  * */
 function DeviceComponentOption (data) {
-    this.pathname = common.buildPath(apiconf.path.device.components, data.deviceId);
+    this.pathname = common.buildPath(api.device.COMPONENTS, data.deviceId);
     this.token = data.deviceToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 DeviceComponentOption.prototype = new ConnectionOptions();
@@ -200,9 +186,9 @@ IoTKiT.DeviceComponentOption = DeviceComponentOption;
  * @constructor
  */
 function DeviceSubmitDataOption (data) {
-    this.pathname = common.buildPath(apiconf.path.submit.data, data.deviceId);
+    this.pathname = common.buildPath(api.submit.DATA, data.deviceId);
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.headers = {
         "Content-type" : "application/json",
         "Authorization" : "Bearer " + data.deviceToken
@@ -216,4 +202,5 @@ function DeviceSubmitDataOption (data) {
 DeviceSubmitDataOption.prototype = new ConnectionOptions();
 DeviceSubmitDataOption.prototype.constructor = DeviceSubmitDataOption;
 IoTKiT.DeviceSubmitDataOption = DeviceSubmitDataOption;
+
 module.exports = IoTKiT;

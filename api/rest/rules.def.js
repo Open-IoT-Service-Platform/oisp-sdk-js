@@ -23,38 +23,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
+
 var common = require('../../lib/common');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-
-var GET_METHOD = 'GET';
-var PUT_METHOD = 'PUT';
-var POST_METHOD = 'POST';
-var DELETE_METHOD = 'DELETE';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
 
 
 function CreateRuleOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.create, data.accountId);
+    this.pathname = common.buildPath(api.rules.CREATE, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 CreateRuleOption.prototype = new ConnectionOptions();
 CreateRuleOption.prototype.constructor = CreateRuleOption;
 IoTKiT.CreateRuleOption = CreateRuleOption;
 
+
 function DeleteRuleOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.delete, [data.accountId, data.ruleId]);
+    this.pathname = common.buildPath(api.rules.DELETE, [data.accountId, data.ruleId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body = JSON.stringify(data.body);
 }
 DeleteRuleOption.prototype = new ConnectionOptions();
@@ -63,10 +57,10 @@ IoTKiT.DeleteRuleOption = DeleteRuleOption;
 
 
 function GetRulesOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.getall, data.accountId);
+    this.pathname = common.buildPath(api.rules.GET_ALL, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetRulesOption.prototype = new ConnectionOptions();
@@ -75,10 +69,10 @@ IoTKiT.GetRulesOption = GetRulesOption;
 
 
 function UpdateRuleOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.update, [data.accountId, data.ruleId]);
+    this.pathname = common.buildPath(api.rules.UPDATE, [data.accountId, data.ruleId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 UpdateRuleOption.prototype = new ConnectionOptions();
@@ -87,10 +81,10 @@ IoTKiT.UpdateRuleOption = UpdateRuleOption;
 
 
 function GetRuleDetailsOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.getdetails, [data.accountId, data.ruleId]);
+    this.pathname = common.buildPath(api.rules.GET_DETAILS, [data.accountId, data.ruleId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetRuleDetailsOption.prototype = new ConnectionOptions();
@@ -99,10 +93,10 @@ IoTKiT.GetRuleDetailsOption = GetRuleDetailsOption;
 
 
 function UpdateRuleStatusOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.update_status, [data.accountId, data.ruleId]);
+    this.pathname = common.buildPath(api.rules.UPDATE_STATUS, [data.accountId, data.ruleId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 UpdateRuleStatusOption.prototype = new ConnectionOptions();
@@ -111,10 +105,10 @@ IoTKiT.UpdateRuleStatusOption = UpdateRuleStatusOption;
 
 
 function CreateDraftRuleOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.create_draft, data.accountId);
+    this.pathname = common.buildPath(api.rules.CREATE_DRAFT, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 CreateDraftRuleOption.prototype = new ConnectionOptions();
@@ -123,10 +117,10 @@ IoTKiT.CreateDraftRuleOption = CreateDraftRuleOption;
 
 
 function DeleteDraftRuleOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.delete_draft, [data.accountId, data.ruleId]);
+    this.pathname = common.buildPath(api.rules.DELETE_DRAFT, [data.accountId, data.ruleId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body = null
 }
 DeleteDraftRuleOption.prototype = new ConnectionOptions();
@@ -135,15 +129,14 @@ IoTKiT.DeleteDraftRuleOption = DeleteDraftRuleOption;
 
 
 function CloneRuleOption(data) {
-    this.pathname = common.buildPath(apiconf.path.rules.clone, [data.accountId, data.ruleId]);
+    this.pathname = common.buildPath(api.rules.CLONE, [data.accountId, data.ruleId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = null;
 }
 CloneRuleOption.prototype = new ConnectionOptions();
 CloneRuleOption.prototype.constructor = CloneRuleOption;
 IoTKiT.CloneRuleOption = CloneRuleOption;
-
 
 module.exports = IoTKiT;

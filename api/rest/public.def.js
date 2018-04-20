@@ -23,24 +23,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
+
 var url = require('url');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-var GET_METHOD = 'GET';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
+
 /**
  * Connection attributes to redirect to Intel Itendtity Main Page
  */
 function HealthOption() {
-    this.pathname = apiconf.path.health;
+    this.pathname = api.HEALTH;
     this.token = null;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
 }
 HealthOption.prototype = new ConnectionOptions();
 HealthOption.prototype.constructor = HealthOption;
@@ -56,17 +54,17 @@ function ExternalInfoOption() {
         protocol: 'http'
     };
     this.url = url.format(urlT);
-    this.method = GET_METHOD;
+    this.method = 'GET';
 }
 ExternalInfoOption.prototype = new ConnectionOptions();
 ExternalInfoOption.prototype.constructor = ExternalInfoOption;
 IoTKiT.ExternalInfoOption = ExternalInfoOption;
 
 function TimeOption() {
-    this.pathname = apiconf.path.time;
+    this.pathname = api.TIME;
     this.token = null;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
 }
 TimeOption.prototype = new ConnectionOptions();
 TimeOption.prototype.constructor = TimeOption;

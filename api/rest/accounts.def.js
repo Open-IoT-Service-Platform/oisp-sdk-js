@@ -23,27 +23,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
+
 var common = require('../../lib/common');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-
-var GET_METHOD = 'GET';
-var PUT_METHOD = 'PUT';
-var POST_METHOD = 'POST';
-var DELETE_METHOD = 'DELETE';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
 
-
 function CreateAccountOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.create);
+    this.pathname = common.buildPath(api.accounts.CREATE);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 CreateAccountOption.prototype = new ConnectionOptions();
@@ -52,10 +44,10 @@ IoTKiT.CreateAccountOption = CreateAccountOption;
 
 
 function GetAccountInfoOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.accountId, data.accountId);
+    this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetAccountInfoOption.prototype = new ConnectionOptions();
@@ -64,10 +56,10 @@ IoTKiT.GetAccountInfoOption = GetAccountInfoOption;
 
 
 function UpdateAccountOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.accountId, data.accountId);
+    this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 UpdateAccountOption.prototype = new ConnectionOptions();
@@ -76,10 +68,10 @@ IoTKiT.UpdateAccountOption = UpdateAccountOption;
 
 
 function DeleteAccountOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.accountId, data.accountId);
+    this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body = null;
 }
 DeleteAccountOption.prototype = new ConnectionOptions();
@@ -88,10 +80,10 @@ IoTKiT.DeleteAccountOption = DeleteAccountOption;
 
 
 function GetAccountActivationCodeOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.activationcode, data.accountId);
+    this.pathname = common.buildPath(api.accounts.ACTIVATION_CODE, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetAccountActivationCodeOption.prototype = new ConnectionOptions();
@@ -100,7 +92,7 @@ IoTKiT.GetAccountActivationCodeOption = GetAccountActivationCodeOption;
 
 
 function RefreshAccountActivationCodeOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.refresh, data.accountId);
+    this.pathname = common.buildPath(api.accounts.REFRESH, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
     this.method = PUT_METHOD;
@@ -112,10 +104,10 @@ IoTKiT.RefreshAccountActivationCodeOption = RefreshAccountActivationCodeOption;
 
 
 function ChangeAccountUserOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.userid, [data.accountId, data.userId]);
+    this.pathname = common.buildPath(api.accounts.USER_ID, [data.accountId, data.userId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = JSON.stringify(data.body);
 }
 ChangeAccountUserOption.prototype = new ConnectionOptions();
@@ -124,10 +116,10 @@ IoTKiT.ChangeAccountUserOption = ChangeAccountUserOption;
 
 
 function GetAccountUsersOption(data) {
-    this.pathname = common.buildPath(apiconf.path.accounts.users, data.accountId);
+    this.pathname = common.buildPath(api.accounts.USERS, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetAccountUsersOption.prototype = new ConnectionOptions();

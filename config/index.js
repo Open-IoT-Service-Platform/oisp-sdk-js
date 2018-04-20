@@ -22,10 +22,10 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-var fs = require('fs'),
-    path = require('path'),
-    localConf = "./global.json",
-    logger = require('../lib/logger');
+var fs = require('fs');
+var path = require('path');
+var localConf = "./global.json";
+
 var config = {};
 
 if (fs.existsSync(path.join(__dirname, localConf))) {
@@ -66,7 +66,7 @@ module.exports.getGlobalConfigName = function() {
     if (fs.existsSync(fullFileName)) {
         return fullFileName;
     } else {
-        logger.error("Failed to find global config file");
+        console.log("Failed to find global config file");
         process.exit(0);
     }
 };

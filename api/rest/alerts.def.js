@@ -23,26 +23,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
+
 var common = require('../../lib/common');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-
-var GET_METHOD = 'GET';
-var PUT_METHOD = 'PUT';
-var POST_METHOD = 'POST';
-var DELETE_METHOD = 'DELETE';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
 
 function GetListOfAlertsOption(data) {
-    this.pathname = common.buildPath(apiconf.path.alerts.getListOfAlerts, data.accountId);
+    this.pathname = common.buildPath(api.alerts.GET_ALL, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetListOfAlertsOption.prototype = new ConnectionOptions();
@@ -51,10 +44,10 @@ IoTKiT.GetListOfAlertsOption = GetListOfAlertsOption;
 
 
 function DeleteListOfAlertsOption(data) {
-    this.pathname = common.buildPath(apiconf.path.alerts.deleteListOfAlerts, data.accountId);
+    this.pathname = common.buildPath(api.alerts.DELETE_ALL, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body = null;
 }
 DeleteListOfAlertsOption.prototype = new ConnectionOptions();
@@ -62,10 +55,10 @@ DeleteListOfAlertsOption.prototype.constructor = DeleteListOfAlertsOption;
 IoTKiT.DeleteListOfAlertsOption = DeleteListOfAlertsOption;
 
 function GetAlertDetailsOption(data) {
-    this.pathname = common.buildPath(apiconf.path.alerts.getAlertDetails, [data.accountId, data.alertId]);
+    this.pathname = common.buildPath(api.alerts.GET, [data.accountId, data.alertId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetAlertDetailsOption.prototype = new ConnectionOptions();
@@ -73,10 +66,10 @@ GetAlertDetailsOption.prototype.constructor = GetAlertDetailsOption;
 IoTKiT.GetAlertDetailsOption = GetAlertDetailsOption;
 
 function DeleteAlertOption(data) {
-    this.pathname = common.buildPath(apiconf.path.alerts.deleteAlert, [data.accountId, data.alertId]);
+    this.pathname = common.buildPath(api.alerts.DELETE, [data.accountId, data.alertId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = DELETE_METHOD;
+    this.method = 'DELETE';
     this.body = null;
 }
 DeleteAlertOption.prototype = new ConnectionOptions();
@@ -84,10 +77,10 @@ DeleteAlertOption.prototype.constructor = DeleteAlertOption;
 IoTKiT.DeleteAlertOption = DeleteAlertOption;
 
 function CloseAlertOption(data) {
-    this.pathname = common.buildPath(apiconf.path.alerts.closeAlert, [data.accountId, data.alertId]);
+    this.pathname = common.buildPath(api.alerts.RESET, [data.accountId, data.alertId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = null;
 }
 CloseAlertOption.prototype = new ConnectionOptions();
@@ -95,10 +88,10 @@ CloseAlertOption.prototype.constructor = CloseAlertOption;
 IoTKiT.CloseAlertOption = CloseAlertOption;
 
 function UpdateAlertStatusOption(data) {
-    this.pathname = common.buildPath(apiconf.path.alerts.updateAlertStatus, [data.accountId, data.alertId, data.statusName]);
+    this.pathname = common.buildPath(api.alerts.UPDATE_STATUS, [data.accountId, data.alertId, data.statusName]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = null;
 }
 UpdateAlertStatusOption.prototype = new ConnectionOptions();
@@ -106,10 +99,10 @@ UpdateAlertStatusOption.prototype.constructor = UpdateAlertStatusOption;
 IoTKiT.UpdateAlertStatusOption = UpdateAlertStatusOption;
 
 function AddCommentsToAlertOption(data) {
-    this.pathname = common.buildPath(apiconf.path.alerts.addCommentsToAlert, [data.accountId, data.alertId]);
+    this.pathname = common.buildPath(api.alerts.ADD_COMMENTS, [data.accountId, data.alertId]);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body = JSON.stringify(data.body);
 }
 AddCommentsToAlertOption.prototype = new ConnectionOptions();

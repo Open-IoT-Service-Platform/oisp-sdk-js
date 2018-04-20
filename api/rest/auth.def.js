@@ -23,25 +23,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var config = require('../../config');
 var common = require('../../lib/common');
-
-var ConnectionOptions = require('./iot.connection.def.js');
-
-var GET_METHOD = 'GET';
-var POST_METHOD = 'POST';
-
-var apiconf = config.connector.rest;
+var api = require('./api');
+var ConnectionOptions = require('./iot.connection.def');
 
 //variable to be returned
 var IoTKiT = {};
 
-
 function GetAuthTokenOption(data) {
-    this.pathname = common.buildPath(apiconf.path.auth.token);
+    this.pathname = common.buildPath(api.auth.TOKEN);
     this.token = null;
     ConnectionOptions.call(this);
-    this.method = POST_METHOD;
+    this.method = 'POST';
     this.body =  JSON.stringify(data.body);
 }
 GetAuthTokenOption.prototype = new ConnectionOptions();
@@ -50,10 +43,10 @@ IoTKiT.GetAuthTokenOption = GetAuthTokenOption;
 
 
 function GetAuthTokenInfoOption(data) {
-    this.pathname = common.buildPath(apiconf.path.auth.tokenInfo);
+    this.pathname = common.buildPath(api.auth.TOKEN_INFO);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetAuthTokenInfoOption.prototype = new ConnectionOptions();
@@ -62,18 +55,14 @@ IoTKiT.GetAuthTokenInfoOption = GetAuthTokenInfoOption;
 
 
 function GetAuthUserInfoOption(data) {
-    this.pathname = common.buildPath(apiconf.path.auth.userInfo);
+    this.pathname = common.buildPath(api.auth.USER_INFO);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = GET_METHOD;
+    this.method = 'GET';
     this.body = null;
 }
 GetAuthUserInfoOption.prototype = new ConnectionOptions();
 GetAuthUserInfoOption.prototype.constructor = GetAuthUserInfoOption;
 IoTKiT.GetAuthUserInfoOption = GetAuthUserInfoOption;
-
-
-
-
 
 module.exports = IoTKiT;
