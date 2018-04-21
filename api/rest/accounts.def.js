@@ -95,7 +95,7 @@ function RefreshAccountActivationCodeOption(data) {
     this.pathname = common.buildPath(api.accounts.REFRESH, data.accountId);
     this.token = data.userToken;
     ConnectionOptions.call(this);
-    this.method = PUT_METHOD;
+    this.method = 'PUT';
     this.body = null;
 }
 RefreshAccountActivationCodeOption.prototype = new ConnectionOptions();
