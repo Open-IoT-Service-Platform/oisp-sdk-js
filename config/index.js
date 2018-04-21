@@ -63,7 +63,6 @@ module.exports.getGlobalConfigName = function() {
     if (fs.existsSync(fullFileName)) {
         return fullFileName;
     } else {
-        console.log("Failed to find global config file");
         process.exit(0);
     }
 };
