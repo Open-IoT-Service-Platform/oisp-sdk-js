@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "async": "^2.5.0",
-    "mqtt": "^2.13.1",
     "request": "^2.83.0",
     "tunnel": "0.0.5",
     "websocket": "^1.0.24",
