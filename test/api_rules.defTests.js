@@ -22,15 +22,11 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 var assert =  require('chai').assert;
-rewire = require('rewire'),
-url = require('url');
-
-var GlobalConfig = require('../config');
+var url = require('url');
 
 var fileToTest = "../api/rest/rules.def.js";
 
 describe(fileToTest, function() {
-    var toTest = rewire(fileToTest);
     var logger = {
         info : function() {},
         error : function()  {},
@@ -48,15 +44,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        create: '/v1/api/accounts/{accountId}/rules'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             body: {
@@ -66,10 +58,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.CreateRuleOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "POST", "The verb is incorrect");
@@ -81,15 +74,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        delete: '/v1/api/accounts/{accountId}/alerts/{alertId}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             ruleId: 10000,
@@ -101,10 +90,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.DeleteRuleOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules/delete_rule_with_alerts/10000", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "DELETE", "The verb is incorrect");
@@ -116,15 +106,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        getall: '/v1/api/accounts/{accountId}/rules'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             alertId: 75,
@@ -135,10 +121,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.GetRulesOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "GET", "The verb is incorrect");
@@ -150,15 +137,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        update: '/v1/api/accounts/{accountId}/alerts/{alertId}/reset'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             ruleId: 10000,
@@ -169,10 +152,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.UpdateRuleOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules/10000", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "PUT", "The verb is incorrect");
@@ -184,15 +168,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        getdetails: '/v1/api/accounts/{accountId}/alerts/{alertId}/status/{statusName}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             ruleId: 10000,
@@ -203,10 +183,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.GetRuleDetailsOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules/10000", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "GET", "The verb is incorrect");
@@ -218,15 +199,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        update_status: '/v1/api/accounts/{accountId}/rules/{ruleId}/status'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             ruleId: 10000,
@@ -237,10 +214,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.UpdateRuleStatusOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules/10000/status", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "PUT", "The verb is incorrect");
@@ -252,15 +230,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        create_draft: '/v1/api/accounts/{accountId}/rules/draft'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             body: {
@@ -270,10 +244,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.CreateDraftRuleOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules/draft", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "PUT", "The verb is incorrect");
@@ -285,15 +260,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        delete_draft: '/v1/api/accounts/{accountId}/rules/draft/{ruleId}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             ruleId: 10000,
@@ -304,10 +275,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.DeleteDraftRuleOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules/draft/10000", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "DELETE", "The verb is incorrect");
@@ -319,15 +291,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    rules: {
-                        clone: '/v1/api/accounts/{accountId}/rules/clone/{ruleId}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             ruleId: 10000,
@@ -338,10 +306,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.CloneRuleOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/rules/clone/10000", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "POST", "The verb is incorrect");

@@ -24,47 +24,47 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var common = require('../../lib/common');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
+module.exports = function(config) {
+    var common = require('../../lib/common');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-//variable to be returned
-var IoTKiT = {};
+    var module = {};
 
-function SubmitDataOption(data) {
-    this.pathname = common.buildPath(api.data.SEND, data.deviceId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body =  JSON.stringify(data.body);
+    function SubmitDataOption(data) {
+        this.pathname = common.buildPath(api.data.SEND, data.deviceId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body =  JSON.stringify(data.body);
+    }
+    SubmitDataOption.prototype = new ConnectionOptions();
+    SubmitDataOption.prototype.constructor = SubmitDataOption;
+    module.SubmitDataOption = SubmitDataOption;
+
+
+    function SearchDataOption(data) {
+        this.pathname = common.buildPath(api.data.SEARCH, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body =  JSON.stringify(data.body);
+    }
+    SearchDataOption.prototype = new ConnectionOptions();
+    SearchDataOption.prototype.constructor = SearchDataOption;
+    module.SearchDataOption = SearchDataOption;
+
+
+    function SearchDataAdvancedOption(data) {
+        this.pathname = common.buildPath(api.data.SEARCH_ADVANCED, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body =  JSON.stringify(data.body);
+    }
+    SearchDataAdvancedOption.prototype = new ConnectionOptions();
+    SearchDataAdvancedOption.prototype.constructor = SearchDataAdvancedOption;
+    module.SearchDataAdvancedOption = SearchDataAdvancedOption;
+
+    return module;
 }
-SubmitDataOption.prototype = new ConnectionOptions();
-SubmitDataOption.prototype.constructor = SubmitDataOption;
-IoTKiT.SubmitDataOption = SubmitDataOption;
-
-
-function SearchDataOption(data) {
-    this.pathname = common.buildPath(api.data.SEARCH, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body =  JSON.stringify(data.body);
-}
-SearchDataOption.prototype = new ConnectionOptions();
-SearchDataOption.prototype.constructor = SearchDataOption;
-IoTKiT.SearchDataOption = SearchDataOption;
-
-
-function SearchDataAdvancedOption(data) {
-    this.pathname = common.buildPath(api.data.SEARCH_ADVANCED, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body =  JSON.stringify(data.body);
-}
-SearchDataAdvancedOption.prototype = new ConnectionOptions();
-SearchDataAdvancedOption.prototype.constructor = SearchDataAdvancedOption;
-IoTKiT.SearchDataAdvancedOption = SearchDataAdvancedOption;
-
-
-module.exports = IoTKiT;

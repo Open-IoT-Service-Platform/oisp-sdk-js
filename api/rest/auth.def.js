@@ -23,46 +23,48 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var common = require('../../lib/common');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
 
-//variable to be returned
-var IoTKiT = {};
+module.exports = function(config) {
+    var common = require('../../lib/common');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-function GetAuthTokenOption(data) {
-    this.pathname = common.buildPath(api.auth.TOKEN);
-    this.token = null;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body =  JSON.stringify(data.body);
+    var module = {};
+
+    function GetAuthTokenOption(data) {
+        this.pathname = common.buildPath(api.auth.TOKEN);
+        this.token = null;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body =  JSON.stringify(data.body);
+    }
+    GetAuthTokenOption.prototype = new ConnectionOptions();
+    GetAuthTokenOption.prototype.constructor = GetAuthTokenOption;
+    module.GetAuthTokenOption = GetAuthTokenOption;
+
+
+    function GetAuthTokenInfoOption(data) {
+        this.pathname = common.buildPath(api.auth.TOKEN_INFO);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetAuthTokenInfoOption.prototype = new ConnectionOptions();
+    GetAuthTokenInfoOption.prototype.constructor = GetAuthTokenInfoOption;
+    module.GetAuthTokenInfoOption = GetAuthTokenInfoOption;
+
+
+    function GetAuthUserInfoOption(data) {
+        this.pathname = common.buildPath(api.auth.USER_INFO);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetAuthUserInfoOption.prototype = new ConnectionOptions();
+    GetAuthUserInfoOption.prototype.constructor = GetAuthUserInfoOption;
+    module.GetAuthUserInfoOption = GetAuthUserInfoOption;
+
+    return module;
 }
-GetAuthTokenOption.prototype = new ConnectionOptions();
-GetAuthTokenOption.prototype.constructor = GetAuthTokenOption;
-IoTKiT.GetAuthTokenOption = GetAuthTokenOption;
-
-
-function GetAuthTokenInfoOption(data) {
-    this.pathname = common.buildPath(api.auth.TOKEN_INFO);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
-}
-GetAuthTokenInfoOption.prototype = new ConnectionOptions();
-GetAuthTokenInfoOption.prototype.constructor = GetAuthTokenInfoOption;
-IoTKiT.GetAuthTokenInfoOption = GetAuthTokenInfoOption;
-
-
-function GetAuthUserInfoOption(data) {
-    this.pathname = common.buildPath(api.auth.USER_INFO);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
-}
-GetAuthUserInfoOption.prototype = new ConnectionOptions();
-GetAuthUserInfoOption.prototype.constructor = GetAuthUserInfoOption;
-IoTKiT.GetAuthUserInfoOption = GetAuthUserInfoOption;
-
-module.exports = IoTKiT;

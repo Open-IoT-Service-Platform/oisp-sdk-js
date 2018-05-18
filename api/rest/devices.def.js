@@ -24,183 +24,184 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var common = require('../../lib/common');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
+module.exports = function(config) {
+    var common = require('../../lib/common');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-//variable to be returned
-var IoTKiT = {};
+    var module = {};
 
-function GetDevicesOption(data) {
-    this.pathname = common.buildPath(api.device.GET_ALL, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body =  null;
-}
-GetDevicesOption.prototype = new ConnectionOptions();
-GetDevicesOption.prototype.constructor = GetDevicesOption;
-IoTKiT.GetDevicesOption = GetDevicesOption;
-
-
-function CreateDeviceOption(data) {
-    this.pathname = common.buildPath(api.device.GET_ALL, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-CreateDeviceOption.prototype = new ConnectionOptions();
-CreateDeviceOption.prototype.constructor = CreateDeviceOption;
-IoTKiT.CreateDeviceOption = CreateDeviceOption;
-
-
-function GetDeviceDetailsOption(data) {
-    this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body =  null;
-}
-GetDeviceDetailsOption.prototype = new ConnectionOptions();
-GetDeviceDetailsOption.prototype.constructor = GetDeviceDetailsOption;
-IoTKiT.GetDeviceDetailsOption = GetDeviceDetailsOption;
-
-
-function UpdateDeviceDetailsOption(data) {
-    this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-UpdateDeviceDetailsOption.prototype = new ConnectionOptions();
-UpdateDeviceDetailsOption.prototype.constructor = UpdateDeviceDetailsOption;
-IoTKiT.UpdateDeviceDetailsOption = UpdateDeviceDetailsOption;
-
-
-function DeleteDeviceOption(data) {
-    this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'DELETE';
-    this.body =  null;
-}
-DeleteDeviceOption.prototype = new ConnectionOptions();
-DeleteDeviceOption.prototype.constructor = DeleteDeviceOption;
-IoTKiT.DeleteDeviceOption = DeleteDeviceOption;
-
-
-function ActivateDeviceOption(data) {
-    this.pathname = common.buildPath(api.device.ACTIVATE_FULL, [data.accountId, data.deviceId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-ActivateDeviceOption.prototype = new ConnectionOptions();
-ActivateDeviceOption.prototype.constructor = ActivateDeviceOption;
-IoTKiT.ActivateDeviceOption = ActivateDeviceOption;
-
-
-function AddDeviceComponentOption(data) {
-    this.pathname = common.buildPath(api.device.COMPONENTS_FULL, [data.accountId, data.deviceId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-AddDeviceComponentOption.prototype = new ConnectionOptions();
-AddDeviceComponentOption.prototype.constructor = AddDeviceComponentOption;
-IoTKiT.AddDeviceComponentOption = AddDeviceComponentOption;
-
-
-function DeleteDeviceComponentOption(data) {
-    this.pathname = common.buildPath(api.device.COMPONENTS_DELETE, [data.accountId, data.deviceId, data.cid]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'DELETE';
-    this.body = null;
-}
-DeleteDeviceComponentOption.prototype = new ConnectionOptions();
-DeleteDeviceComponentOption.prototype.constructor = DeleteDeviceComponentOption;
-IoTKiT.DeleteDeviceComponentOption = DeleteDeviceComponentOption;
-
-
-function DeviceActivateOption(data) {
-    this.pathname = common.buildPath(api.device.ACTIVATE, data.deviceId);
-    this.token = null;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body =  JSON.stringify(data.body);
-}
-DeviceActivateOption.prototype = new ConnectionOptions();
-DeviceActivateOption.prototype.constructor = DeviceActivateOption;
-IoTKiT.DeviceActivateOption = DeviceActivateOption;
-
-
-function DeviceGetOption (data) {
-    this.pathname = common.buildPath(api.device.GET, data.deviceId);
-    this.token = data.deviceToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-
-}
-DeviceGetOption.prototype = new ConnectionOptions();
-DeviceGetOption.prototype.constructor = DeviceGetOption;
-IoTKiT.DeviceGetOption = DeviceGetOption;
-
-
-function DeviceMetadataOption (data) {
-    this.pathname = common.buildPath(api.device.UPDATE, data.deviceId);
-    this.token = data.deviceToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-DeviceMetadataOption.prototype = new ConnectionOptions();
-DeviceMetadataOption.prototype.constructor = DeviceMetadataOption;
-IoTKiT.DeviceMetadataOption = DeviceMetadataOption;
-
-
-/**
- * Build an object option for Request package.
- * @param data
- * @constructor
- * */
-function DeviceComponentOption (data) {
-    this.pathname = common.buildPath(api.device.COMPONENTS, data.deviceId);
-    this.token = data.deviceToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-DeviceComponentOption.prototype = new ConnectionOptions();
-DeviceComponentOption.prototype.constructor = DeviceComponentOption;
-IoTKiT.DeviceComponentOption = DeviceComponentOption;
-
-
-/**
- * @description Build an object option for Request package.
- * @param data
- * @constructor
- */
-function DeviceSubmitDataOption (data) {
-    this.pathname = common.buildPath(api.submit.DATA, data.deviceId);
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.headers = {
-        "Content-type" : "application/json",
-        "Authorization" : "Bearer " + data.deviceToken
-    };
-    if (data.forwarded) {
-        this.headers["forwarded"] = true;
-        delete data.forwarded;
+    function GetDevicesOption(data) {
+        this.pathname = common.buildPath(api.device.GET_ALL, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body =  null;
     }
-    this.body = JSON.stringify(data.body);
-}
-DeviceSubmitDataOption.prototype = new ConnectionOptions();
-DeviceSubmitDataOption.prototype.constructor = DeviceSubmitDataOption;
-IoTKiT.DeviceSubmitDataOption = DeviceSubmitDataOption;
+    GetDevicesOption.prototype = new ConnectionOptions();
+    GetDevicesOption.prototype.constructor = GetDevicesOption;
+    module.GetDevicesOption = GetDevicesOption;
 
-module.exports = IoTKiT;
+
+    function CreateDeviceOption(data) {
+        this.pathname = common.buildPath(api.device.GET_ALL, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    CreateDeviceOption.prototype = new ConnectionOptions();
+    CreateDeviceOption.prototype.constructor = CreateDeviceOption;
+    module.CreateDeviceOption = CreateDeviceOption;
+
+
+    function GetDeviceDetailsOption(data) {
+        this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body =  null;
+    }
+    GetDeviceDetailsOption.prototype = new ConnectionOptions();
+    GetDeviceDetailsOption.prototype.constructor = GetDeviceDetailsOption;
+    module.GetDeviceDetailsOption = GetDeviceDetailsOption;
+
+
+    function UpdateDeviceDetailsOption(data) {
+        this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    UpdateDeviceDetailsOption.prototype = new ConnectionOptions();
+    UpdateDeviceDetailsOption.prototype.constructor = UpdateDeviceDetailsOption;
+    module.UpdateDeviceDetailsOption = UpdateDeviceDetailsOption;
+
+
+    function DeleteDeviceOption(data) {
+        this.pathname = common.buildPath(api.device.GET_DETAILS, [data.accountId, data.deviceId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+        this.body =  null;
+    }
+    DeleteDeviceOption.prototype = new ConnectionOptions();
+    DeleteDeviceOption.prototype.constructor = DeleteDeviceOption;
+    module.DeleteDeviceOption = DeleteDeviceOption;
+
+
+    function ActivateDeviceOption(data) {
+        this.pathname = common.buildPath(api.device.ACTIVATE_FULL, [data.accountId, data.deviceId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    ActivateDeviceOption.prototype = new ConnectionOptions();
+    ActivateDeviceOption.prototype.constructor = ActivateDeviceOption;
+    module.ActivateDeviceOption = ActivateDeviceOption;
+
+
+    function AddDeviceComponentOption(data) {
+        this.pathname = common.buildPath(api.device.COMPONENTS_FULL, [data.accountId, data.deviceId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    AddDeviceComponentOption.prototype = new ConnectionOptions();
+    AddDeviceComponentOption.prototype.constructor = AddDeviceComponentOption;
+    module.AddDeviceComponentOption = AddDeviceComponentOption;
+
+
+    function DeleteDeviceComponentOption(data) {
+        this.pathname = common.buildPath(api.device.COMPONENTS_DELETE, [data.accountId, data.deviceId, data.cid]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+        this.body = null;
+    }
+    DeleteDeviceComponentOption.prototype = new ConnectionOptions();
+    DeleteDeviceComponentOption.prototype.constructor = DeleteDeviceComponentOption;
+    module.DeleteDeviceComponentOption = DeleteDeviceComponentOption;
+
+
+    function DeviceActivateOption(data) {
+        this.pathname = common.buildPath(api.device.ACTIVATE, data.deviceId);
+        this.token = null;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body =  JSON.stringify(data.body);
+    }
+    DeviceActivateOption.prototype = new ConnectionOptions();
+    DeviceActivateOption.prototype.constructor = DeviceActivateOption;
+    module.DeviceActivateOption = DeviceActivateOption;
+
+
+    function DeviceGetOption (data) {
+        this.pathname = common.buildPath(api.device.GET, data.deviceId);
+        this.token = data.deviceToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+
+    }
+    DeviceGetOption.prototype = new ConnectionOptions();
+    DeviceGetOption.prototype.constructor = DeviceGetOption;
+    module.DeviceGetOption = DeviceGetOption;
+
+
+    function DeviceMetadataOption (data) {
+        this.pathname = common.buildPath(api.device.UPDATE, data.deviceId);
+        this.token = data.deviceToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    DeviceMetadataOption.prototype = new ConnectionOptions();
+    DeviceMetadataOption.prototype.constructor = DeviceMetadataOption;
+    module.DeviceMetadataOption = DeviceMetadataOption;
+
+
+    /**
+     * Build an object option for Request package.
+     * @param data
+     * @constructor
+     * */
+    function DeviceComponentOption (data) {
+        this.pathname = common.buildPath(api.device.COMPONENTS, data.deviceId);
+        this.token = data.deviceToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    DeviceComponentOption.prototype = new ConnectionOptions();
+    DeviceComponentOption.prototype.constructor = DeviceComponentOption;
+    module.DeviceComponentOption = DeviceComponentOption;
+
+
+    /**
+     * @description Build an object option for Request package.
+     * @param data
+     * @constructor
+     */
+    function DeviceSubmitDataOption (data) {
+        this.pathname = common.buildPath(api.submit.DATA, data.deviceId);
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.headers = {
+            "Content-type" : "application/json",
+            "Authorization" : "Bearer " + data.deviceToken
+        };
+        if (data.forwarded) {
+            this.headers["forwarded"] = true;
+            delete data.forwarded;
+        }
+        this.body = JSON.stringify(data.body);
+    }
+    DeviceSubmitDataOption.prototype = new ConnectionOptions();
+    DeviceSubmitDataOption.prototype.constructor = DeviceSubmitDataOption;
+    module.DeviceSubmitDataOption = DeviceSubmitDataOption;
+
+    return module;
+}

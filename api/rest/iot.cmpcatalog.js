@@ -23,11 +23,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var httpClient = require('../../lib/httpClient');
-var CatalogDef = require('./cmpcatalog.def');
 
+module.exports = function(config) {
+    var module = {};
+    
+    module.httpClient = require('../../lib/httpClient');
+    module.CatalogDef = require('./cmpcatalog.def')(config);
 
-module.exports.getCatalog = function (data, callback) {
-    var catalog = new CatalogDef.CatalogOption(data);
-    return httpClient.httpRequest(catalog, callback);
-};
+    module.getCatalog = function (data, callback) {
+        var catalog = new module.CatalogDef.CatalogOption(data);
+        return module.httpClient.httpRequest(catalog, callback);
+    };
+    
+    return module;
+}

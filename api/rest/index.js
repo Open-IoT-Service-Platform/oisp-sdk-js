@@ -23,15 +23,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-module.exports = {
-    auth:       require('./iot.auth'),
-    users:      require('./iot.users'),
-    accounts:   require('./iot.accounts'),
-    data:       require('./iot.data'),
-    devices:    require('./iot.devices'),
-    publicApi:  require('./iot.public'),
-    cmpcatalog: require('./iot.cmpcatalog'),
-    control:    require('./iot.control'),
-    rules:      require('./iot.rules'),
-    alerts:     require('./iot.alerts')
+
+module.exports = function(config) {
+    var module = {};
+    
+    module.auth =       require('./iot.auth')(config);
+    module.users =      require('./iot.users')(config);
+    module.accounts =   require('./iot.accounts')(config);
+    module.data =       require('./iot.data')(config);
+    module.devices =    require('./iot.devices')(config);
+    module.publicApi =  require('./iot.public')(config);
+    module.cmpcatalog = require('./iot.cmpcatalog')(config);
+    module.control =    require('./iot.control')(config);
+    module.rules =      require('./iot.rules')(config);
+    module.alerts =     require('./iot.alerts')(config);
+    
+    return module;
 };

@@ -24,74 +24,78 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
+module.exports = function(config) {
+    var module = {};
+    
+    module.httpClient = require('../../lib/httpClient');
+    module.userAdminDef = require('./admin.def')(config);
 
-var httpClient = require('../../lib/httpClient');
-var userAdminDef = require('./admin.def');
+    /** @description get a list of all alerts for specified account through API:GET/v1/api/accounts/{accountId}/alerts
+     *  @param data.userToken contains access token
+     *  @param data.accountId contains the accountId
+     */
 
+    module.getListOfAlerts = function(data, callback) {
+        var getListOfAlertsOpt = new module.userAdminDef.alerts.GetListOfAlertsOption(data);
+        return module.httpClient.httpRequest(getListOfAlertsOpt, callback);
+    };
 
-/** @description get a list of all alerts for specified account through API:GET/v1/api/accounts/{accountId}/alerts
- *  @param data.userToken contains access token
- *  @param data.accountId contains the accountId
- */
+    /** @description get specific alert details connected with the account through API:GET/v1/api/accounts/{accountId}/alerts/{alertId}
+     *  @param data.userToken contains access token
+     *  @param data.accountId contains the accountId
+     *  @param data.alertId contains the alertId
+     */
 
-module.exports.getListOfAlerts = function(data, callback) {
-    var getListOfAlertsOpt = new userAdminDef.alerts.GetListOfAlertsOption(data);
-    return httpClient.httpRequest(getListOfAlertsOpt, callback);
-};
+    module.getAlertDetails = function(data, callback) {
+        var getAlertDetailsOpt = new module.userAdminDef.alerts.GetAlertDetailsOption(data);
+        return module.httpClient.httpRequest(getAlertDetailsOpt, callback);
+    };
 
-/** @description get specific alert details connected with the account through API:GET/v1/api/accounts/{accountId}/alerts/{alertId}
- *  @param data.userToken contains access token
- *  @param data.accountId contains the accountId
- *  @param data.alertId contains the alertId
- */
+    /** @description delete specific alert connected with the account through API:DELETE/v1/api/accounts/{accountId}/alerts/{alertId}
+     *  @param data.userToken contains access token
+     *  @param data.accountId contains the accountId
+     *  @param data.alertId contains the alertId
+     */
 
-module.exports.getAlertDetails = function(data, callback) {
-    var getAlertDetailsOpt = new userAdminDef.alerts.GetAlertDetailsOption(data);
-    return httpClient.httpRequest(getAlertDetailsOpt, callback);
-};
+    module.deleteAlert = function(data, callback) {
+        var deleteAlertOpt = new module.userAdminDef.alerts.DeleteAlertOption(data);
+        return module.httpClient.httpRequest(deleteAlertOpt, callback);
+    };
 
-/** @description delete specific alert connected with the account through API:DELETE/v1/api/accounts/{accountId}/alerts/{alertId}
- *  @param data.userToken contains access token
- *  @param data.accountId contains the accountId
- *  @param data.alertId contains the alertId
- */
+    /** @description Change alert status to - "Closed". Alert won't be active any more through API:PUT/v1/api/accounts/{accountId}/alerts/{alertId}/reset
+     *  @param data.userToken contains access token
+     *  @param data.accountId contains the accountId
+     *  @param data.alertId contains the alertId
+     */
 
-module.exports.deleteAlert = function(data, callback) {
-    var deleteAlertOpt = new userAdminDef.alerts.DeleteAlertOption(data);
-    return httpClient.httpRequest(deleteAlertOpt, callback);
-};
+    module.closeAlert = function(data, callback) {
+        var closeAlertOpt = new module.userAdminDef.alerts.CloseAlertOption(data);
+        return module.httpClient.httpRequest(closeAlertOpt, callback);
+    };
 
-/** @description Change alert status to - "Closed". Alert won't be active any more through API:PUT/v1/api/accounts/{accountId}/alerts/{alertId}/reset
- *  @param data.userToken contains access token
- *  @param data.accountId contains the accountId
- *  @param data.alertId contains the alertId
- */
+    /** @description Change status of the Alert. Status should have one of the following values: ['New', 'Open', 'Closed'] through API:PUT/v1/api/accounts/{accountId}/alerts/{alertId}/status/{statusName}
+     *  @param data.userToken contains access token
+     *  @param data.accountId contains the accountId
+     *  @param data.alertId contains the alertId
+     *  @param data.statusName contains the statusName
+     */
 
-module.exports.closeAlert = function(data, callback) {
-    var closeAlertOpt = new userAdminDef.alerts.CloseAlertOption(data);
-    return httpClient.httpRequest(closeAlertOpt, callback);
-};
+    module.updateAlertStatus = function(data, callback) {
+        var updateAlertStatusOpt = new module.userAdminDef.alerts.UpdateAlertStatusOption(data);
+        return module.httpClient.httpRequest(updateAlertStatusOpt, callback);
+    };
 
-/** @description Change status of the Alert. Status should have one of the following values: ['New', 'Open', 'Closed'] through API:PUT/v1/api/accounts/{accountId}/alerts/{alertId}/status/{statusName}
- *  @param data.userToken contains access token
- *  @param data.accountId contains the accountId
- *  @param data.alertId contains the alertId
- *  @param data.statusName contains the statusName
- */
+    /** @description Add list of comments to the alert through API:POST/v1/api/accounts/{accountId}/alerts/{alertId}/comments
+     *  @param data.userToken contains access token
+     *  @param data.accountId contains the accountId
+     *  @param data.alertId contains the alertId
+     *  @param data.body contains the comments as described in the API spec
+     */
 
-module.exports.updateAlertStatus = function(data, callback) {
-    var updateAlertStatusOpt = new userAdminDef.alerts.UpdateAlertStatusOption(data);
-    return httpClient.httpRequest(updateAlertStatusOpt, callback);
-};
+    module.addCommentsToAlert = function(data, callback) {
+        var addCommentsToAlertOpt = new module.userAdminDef.alerts.AddCommentsToAlertOption(data);
+        return module.httpClient.httpRequest(addCommentsToAlertOpt, callback);
+    };
 
-/** @description Add list of comments to the alert through API:POST/v1/api/accounts/{accountId}/alerts/{alertId}/comments
- *  @param data.userToken contains access token
- *  @param data.accountId contains the accountId
- *  @param data.alertId contains the alertId
- *  @param data.body contains the comments as described in the API spec
- */
-
-module.exports.addCommentsToAlert = function(data, callback) {
-    var addCommentsToAlertOpt = new userAdminDef.alerts.AddCommentsToAlertOption(data);
-    return httpClient.httpRequest(addCommentsToAlertOpt, callback);
-};
+    return module;
+}

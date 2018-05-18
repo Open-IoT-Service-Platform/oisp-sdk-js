@@ -24,89 +24,90 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var common = require('../../lib/common');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
+module.exports = function(config) {
+    var common = require('../../lib/common');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-//variable to be returned
-var IoTKiT = {};
+    var module = {};
 
-function GetListOfAlertsOption(data) {
-    this.pathname = common.buildPath(api.alerts.GET_ALL, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
+    function GetListOfAlertsOption(data) {
+        this.pathname = common.buildPath(api.alerts.GET_ALL, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetListOfAlertsOption.prototype = new ConnectionOptions();
+    GetListOfAlertsOption.prototype.constructor = GetListOfAlertsOption;
+    module.GetListOfAlertsOption = GetListOfAlertsOption;
+
+
+    function DeleteListOfAlertsOption(data) {
+        this.pathname = common.buildPath(api.alerts.DELETE_ALL, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+        this.body = null;
+    }
+    DeleteListOfAlertsOption.prototype = new ConnectionOptions();
+    DeleteListOfAlertsOption.prototype.constructor = DeleteListOfAlertsOption;
+    module.DeleteListOfAlertsOption = DeleteListOfAlertsOption;
+
+    function GetAlertDetailsOption(data) {
+        this.pathname = common.buildPath(api.alerts.GET, [data.accountId, data.alertId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetAlertDetailsOption.prototype = new ConnectionOptions();
+    GetAlertDetailsOption.prototype.constructor = GetAlertDetailsOption;
+    module.GetAlertDetailsOption = GetAlertDetailsOption;
+
+    function DeleteAlertOption(data) {
+        this.pathname = common.buildPath(api.alerts.DELETE, [data.accountId, data.alertId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+        this.body = null;
+    }
+    DeleteAlertOption.prototype = new ConnectionOptions();
+    DeleteAlertOption.prototype.constructor = DeleteAlertOption;
+    module.DeleteAlertOption = DeleteAlertOption;
+
+    function CloseAlertOption(data) {
+        this.pathname = common.buildPath(api.alerts.RESET, [data.accountId, data.alertId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = null;
+    }
+    CloseAlertOption.prototype = new ConnectionOptions();
+    CloseAlertOption.prototype.constructor = CloseAlertOption;
+    module.CloseAlertOption = CloseAlertOption;
+
+    function UpdateAlertStatusOption(data) {
+        this.pathname = common.buildPath(api.alerts.UPDATE_STATUS, [data.accountId, data.alertId, data.statusName]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = null;
+    }
+    UpdateAlertStatusOption.prototype = new ConnectionOptions();
+    UpdateAlertStatusOption.prototype.constructor = UpdateAlertStatusOption;
+    module.UpdateAlertStatusOption = UpdateAlertStatusOption;
+
+    function AddCommentsToAlertOption(data) {
+        this.pathname = common.buildPath(api.alerts.ADD_COMMENTS, [data.accountId, data.alertId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    AddCommentsToAlertOption.prototype = new ConnectionOptions();
+    AddCommentsToAlertOption.prototype.constructor = AddCommentsToAlertOption;
+    module.AddCommentsToAlertOption = AddCommentsToAlertOption;
+
+    return module;
 }
-GetListOfAlertsOption.prototype = new ConnectionOptions();
-GetListOfAlertsOption.prototype.constructor = GetListOfAlertsOption;
-IoTKiT.GetListOfAlertsOption = GetListOfAlertsOption;
-
-
-function DeleteListOfAlertsOption(data) {
-    this.pathname = common.buildPath(api.alerts.DELETE_ALL, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'DELETE';
-    this.body = null;
-}
-DeleteListOfAlertsOption.prototype = new ConnectionOptions();
-DeleteListOfAlertsOption.prototype.constructor = DeleteListOfAlertsOption;
-IoTKiT.DeleteListOfAlertsOption = DeleteListOfAlertsOption;
-
-function GetAlertDetailsOption(data) {
-    this.pathname = common.buildPath(api.alerts.GET, [data.accountId, data.alertId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
-}
-GetAlertDetailsOption.prototype = new ConnectionOptions();
-GetAlertDetailsOption.prototype.constructor = GetAlertDetailsOption;
-IoTKiT.GetAlertDetailsOption = GetAlertDetailsOption;
-
-function DeleteAlertOption(data) {
-    this.pathname = common.buildPath(api.alerts.DELETE, [data.accountId, data.alertId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'DELETE';
-    this.body = null;
-}
-DeleteAlertOption.prototype = new ConnectionOptions();
-DeleteAlertOption.prototype.constructor = DeleteAlertOption;
-IoTKiT.DeleteAlertOption = DeleteAlertOption;
-
-function CloseAlertOption(data) {
-    this.pathname = common.buildPath(api.alerts.RESET, [data.accountId, data.alertId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = null;
-}
-CloseAlertOption.prototype = new ConnectionOptions();
-CloseAlertOption.prototype.constructor = CloseAlertOption;
-IoTKiT.CloseAlertOption = CloseAlertOption;
-
-function UpdateAlertStatusOption(data) {
-    this.pathname = common.buildPath(api.alerts.UPDATE_STATUS, [data.accountId, data.alertId, data.statusName]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = null;
-}
-UpdateAlertStatusOption.prototype = new ConnectionOptions();
-UpdateAlertStatusOption.prototype.constructor = UpdateAlertStatusOption;
-IoTKiT.UpdateAlertStatusOption = UpdateAlertStatusOption;
-
-function AddCommentsToAlertOption(data) {
-    this.pathname = common.buildPath(api.alerts.ADD_COMMENTS, [data.accountId, data.alertId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-AddCommentsToAlertOption.prototype = new ConnectionOptions();
-AddCommentsToAlertOption.prototype.constructor = AddCommentsToAlertOption;
-IoTKiT.AddCommentsToAlertOption = AddCommentsToAlertOption;
-
-module.exports = IoTKiT;

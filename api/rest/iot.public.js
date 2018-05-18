@@ -23,23 +23,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var httpClient = require('../../lib/httpClient');
-var PublicApi = require('./public.def');
 
-/**
- * It passes to a callback the access token
- */
-module.exports.health = function(callback) {
-    var health = new PublicApi.HealthOption();
-    return httpClient.httpRequest(health, callback);
-};
+module.exports = function(config) {
+    var module = {};
+    
+    module.httpClient = require('../../lib/httpClient');
+    module.PublicApi = require('./public.def')(config);
+
+    /**
+     * It passes to a callback the access token
+     */
+    module.health = function(callback) {
+        var health = new module.PublicApi.HealthOption();
+        return module.httpClient.httpRequest(health, callback);
+    };
 
 
-module.exports.getExternalInfo = function (callback) {
-    var external = new PublicApi.ExternalInfoOption();
-    return httpClient.httpRequest(external, callback);
-};
-module.exports.getActualTime = function (callback) {
-    var time = new PublicApi.TimeOption();
-    return httpClient.httpRequest(time, callback);
-};
+    module.getExternalInfo = function (callback) {
+        var external = new module.PublicApi.ExternalInfoOption();
+        return module.httpClient.httpRequest(external, callback);
+    };
+
+
+    module.getActualTime = function (callback) {
+        var time = new module.PublicApi.TimeOption();
+        return module.httpClient.httpRequest(time, callback);
+    };
+
+    return module;
+}

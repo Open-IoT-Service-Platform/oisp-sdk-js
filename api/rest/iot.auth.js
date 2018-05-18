@@ -23,38 +23,42 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var httpClient = require('../../lib/httpClient');
-var userAdminDef = require('./admin.def');
+
+module.exports = function(config) {
+    var module = {};
+    
+    module.httpClient = require('../../lib/httpClient');
+    module.userAdminDef = require('./admin.def')(config);
+
+    /**
+     *  @description Get user token through API:POST/v1/api/auth/token
+     *  @param data.body.email the user email 
+     *  @param data.body.password the user password
+     */
+    module.getAuthToken = function(data, callback) {
+        var getAuthTokenOpt = new module.userAdminDef.auth.GetAuthTokenOption(data);
+        return module.httpClient.httpRequest(getAuthTokenOpt, callback);
+    };
 
 
-/**
- *  @description Get user token through API:POST/v1/api/auth/token
- *  @param data.body.email the user email 
- *  @param data.body.password the user password
- */
-module.exports.getAuthToken = function(data, callback) {
-    var getAuthTokenOpt = new userAdminDef.auth.GetAuthTokenOption(data);
-    return httpClient.httpRequest(getAuthTokenOpt, callback);
-};
+    /**
+     *  @description Get user token through API:GET/v1/api/auth/tokenInfo
+     *  @param data.token the access token
+     */
+    module.getAuthTokenInfo = function(data, callback) {
+        var getAuthTokenInfoOpt = new module.userAdminDef.auth.GetAuthTokenInfoOption(data);
+        return module.httpClient.httpRequest(getAuthTokenInfoOpt, callback);
+    };
 
 
-/**
- *  @description Get user token through API:GET/v1/api/auth/tokenInfo
- *  @param data.token the access token
- */
-module.exports.getAuthTokenInfo = function(data, callback) {
-    var getAuthTokenInfoOpt = new userAdminDef.auth.GetAuthTokenInfoOption(data);
-    return httpClient.httpRequest(getAuthTokenInfoOpt, callback);
-};
-
-
-/**
- *  @description Get information about the JWT owner through API:GET/v1/api/auth/me
- *  @param data contains the auth token
- */
-module.exports.getAuthUserInfo = function(data, callback) {
-    var getAuthUserInfoOpt = new userAdminDef.auth.GetAuthUserInfoOption(data);
-    return httpClient.httpRequest(getAuthUserInfoOpt, callback);
-};
-
-
+    /**
+     *  @description Get information about the JWT owner through API:GET/v1/api/auth/me
+     *  @param data contains the auth token
+     */
+    module.getAuthUserInfo = function(data, callback) {
+        var getAuthUserInfoOpt = new module.userAdminDef.auth.GetAuthUserInfoOption(data);
+        return module.httpClient.httpRequest(getAuthUserInfoOpt, callback);
+    };
+    
+    return module;
+}

@@ -23,41 +23,47 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var httpClient = require('../../lib/httpClient');
-var userAdminDef = require('./admin.def');
+
+module.exports = function(config) {
+    var module = {};
+    
+    module.httpClient = require('../../lib/httpClient');
+    module.userAdminDef = require('./admin.def')(config);
+    
+    /**
+     *  @description Sends data to cloud through API:POST/v1/api/data/{deviceId}
+     *  @param data.body the data JSON object according to the API spec for this call 
+     *  @param data.userToken contains the access token
+     *  @param data.deviceId id of the device which sends the data
+     */
+    module.submitData = function(data, callback) {
+        var submitDataOpt = new module.userAdminDef.data.SendDataOption(data);
+        return module.httpClient.httpRequest(submitDataOpt, callback);
+    };
 
 
-/**
- *  @description Sends data to cloud through API:POST/v1/api/data/{deviceId}
- *  @param data.body the data JSON object according to the API spec for this call 
- *  @param data.userToken contains the access token
- *  @param data.deviceId id of the device which sends the data
- */
-module.exports.submitData = function(data, callback) {
-    var submitDataOpt = new userAdminDef.data.SendDataOption(data);
-    return httpClient.httpRequest(submitDataOpt, callback);
-};
+    /**
+     *  @description Retrieve data from cloud through API:POST/v1/api/accounts/{accountId}/data/search
+     *  @param data.body the detail of the search data JSON object according to the API spec for this call 
+     *  @param data.userToken contains the access token
+     *  @param data.accountId id of the account where the search is performed
+     */
+    module.searchData = function(data, callback) {
+        var searchDataOpt = new module.userAdminDef.data.SearchDataOption(data);
+        return module.httpClient.httpRequest(searchDataOpt, callback);
+    };
 
 
-/**
- *  @description Retrieve data from cloud through API:POST/v1/api/accounts/{accountId}/data/search
- *  @param data.body the detail of the search data JSON object according to the API spec for this call 
- *  @param data.userToken contains the access token
- *  @param data.accountId id of the account where the search is performed
- */
-module.exports.searchData = function(data, callback) {
-    var searchDataOpt = new userAdminDef.data.SearchDataOption(data);
-    return httpClient.httpRequest(searchDataOpt, callback);
-};
+    /**
+     *  @description Retrieve data from cloud through advanced API:POST/v1/api/accounts/{accountId}/data/search/advanced
+     *  @param data.body the detail of the search data JSON object according to the API spec for this call 
+     *  @param data.userToken contains the access token
+     *  @param data.accountId id of the account where the search is performed
+     */
+    module.searchDataAdvanced = function(data, callback) {
+        var searchDataAdvancedOpt = new module.userAdminDef.data.SearchDataAdvancedOption(data);
+        return module.httpClient.httpRequest(searchDataAdvancedOpt, callback);
+    };
 
-
-/**
- *  @description Retrieve data from cloud through advanced API:POST/v1/api/accounts/{accountId}/data/search/advanced
- *  @param data.body the detail of the search data JSON object according to the API spec for this call 
- *  @param data.userToken contains the access token
- *  @param data.accountId id of the account where the search is performed
- */
-module.exports.searchDataAdvanced = function(data, callback) {
-    var searchDataAdvancedOpt = new userAdminDef.data.SearchDataAdvancedOption(data);
-    return httpClient.httpRequest(searchDataAdvancedOpt, callback);
-};
+    return module;
+}

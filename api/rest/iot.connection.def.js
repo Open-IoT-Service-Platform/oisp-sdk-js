@@ -23,45 +23,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var url = require('url'),
-    config = require('../../config');
 
+module.exports = function(config) {
+    var url = require('url');
+    var apiconf = config.connector.rest;
 
-var apiconf = config.connector.rest;
-/**
- * Top of the hierarchy. Common attributes to every
- * Connection Options
- */
-function ConnectionOptions() {
-    if (apiconf.proxy && apiconf.proxy.host) {
-        if(apiconf.proxy.host.indexOf('://') < 0) {
-            apiconf.proxy.host = 'http://' + apiconf.proxy.host;
+    /**
+     * Top of the hierarchy. Common attributes to every
+     * Connection Options
+     */
+    function ConnectionOptions() {
+        if (apiconf.proxy && apiconf.proxy.host) {
+            if(apiconf.proxy.host.indexOf('://') < 0) {
+                apiconf.proxy.host = 'http://' + apiconf.proxy.host;
+            }
+            this.proxy = apiconf.proxy.host + ":" + apiconf.proxy.port;
+        } else if(process.env.https_proxy) {
+            this.proxy = process.env.https_proxy;
+        } else if(process.env.http_proxy) {
+            this.proxy = process.env.http_proxy;
         }
-        this.proxy = apiconf.proxy.host + ":" + apiconf.proxy.port;
-    } else if(process.env.https_proxy) {
-        this.proxy = process.env.https_proxy;
-    } else if(process.env.http_proxy) {
-        this.proxy = process.env.http_proxy;
+        var urlT =  {
+            hostname: apiconf.host,
+            port: apiconf.port,
+            pathname: this.pathname,
+            protocol: apiconf.protocol,
+            query: this.query
+        };
+        if (apiconf.strictSSL === false) {
+            this.strictSSL = false;
+        }
+        this.timeout = apiconf.timeout;
+        this.url = url.format(urlT);
+        this.headers = {
+            "Content-type" : "application/json"
+        };
+        if (this.token) {
+            this.headers["Authorization"] = "Bearer " + this.token;
+        }
+        delete this.token;
     }
-    var urlT =  {
-        hostname: apiconf.host,
-        port: apiconf.port,
-        pathname: this.pathname,
-        protocol: apiconf.protocol,
-        query: this.query
-    };
-    if (apiconf.strictSSL === false) {
-        this.strictSSL = false;
-    }
-    this.timeout = apiconf.timeout;
-    this.url = url.format(urlT);
-    this.headers = {
-        "Content-type" : "application/json"
-    };
-    if (this.token) {
-        this.headers["Authorization"] = "Bearer " + this.token;
-    }
-    delete this.token;
-}
 
-module.exports = ConnectionOptions;
+    return ConnectionOptions;
+}

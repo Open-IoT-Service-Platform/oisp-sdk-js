@@ -23,7 +23,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-module.exports = {
-    rest: require('./rest'),
-    ws:   require('./ws')
+module.exports = function(config) {
+    var module = {};
+    
+    module.rest = require('./rest')(config);
+    module.ws =   require('./ws');
+    
+    return module;
 };

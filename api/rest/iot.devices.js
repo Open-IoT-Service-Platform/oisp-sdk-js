@@ -23,176 +23,184 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-var httpClient = require('../../lib/httpClient');
-var adminDef = require('./admin.def');
-var async = require('async');
 
-/**
- *  @description Gets a list of all devices for an account through API: GET:/v1/api/accounts/{accountId}/devices
- *  @param data.userToken contains the access token
- *  @param data.deviceId id of the device which sends the data
- */
-module.exports.getDevices = function(data, callback) {
-    var getDevicesOpt = new adminDef.devices.GetDevicesOption(data);
-    return httpClient.httpRequest(getDevicesOpt, callback);
-};
+module.exports = function(config) {
+    var async = require('async');
+    
+    var module = {};
+    
+    module.httpClient = require('../../lib/httpClient');
+    module.adminDef = require('./admin.def')(config);
 
-
-/**
- *  @description Creates a device through API: POST:/v1/api/accounts/{accountId}/devices
- *  @param data.userToken contains the access token
- *  @param data.accountId id of the device which sends the data
- *  @param data.body the description of the device as described in the API spec
- */
-module.exports.createDevice = function(data, callback) {
-    var createDeviceOpt = new adminDef.devices.CreateDeviceOption(data);
-    return httpClient.httpRequest(createDeviceOpt, callback);
-};
+    /**
+     *  @description Gets a list of all devices for an account through API: GET:/v1/api/accounts/{accountId}/devices
+     *  @param data.userToken contains the access token
+     *  @param data.deviceId id of the device which sends the data
+     */
+    module.getDevices = function(data, callback) {
+        var getDevicesOpt = new module.adminDef.devices.GetDevicesOption(data);
+        return module.httpClient.httpRequest(getDevicesOpt, callback);
+    };
 
 
-/**
- *  @description Gets details of a device through API: GET:/v1/api/accounts/{accountId}/devices/{deviceId}
- *  @param data.userToken contains the access token
- *  @param data.accountId id of the device which sends the data
- *  @param data.deviceId the id of the device
- */
-module.exports.getDeviceDetails = function(data, callback) {
-    var getDeviceDetailsOpt = new adminDef.devices.GetDeviceDetailsOption(data);
-    return httpClient.httpRequest(getDeviceDetailsOpt, callback);
-};
+    /**
+     *  @description Creates a device through API: POST:/v1/api/accounts/{accountId}/devices
+     *  @param data.userToken contains the access token
+     *  @param data.accountId id of the device which sends the data
+     *  @param data.body the description of the device as described in the API spec
+     */
+    module.createDevice = function(data, callback) {
+        var createDeviceOpt = new module.adminDef.devices.CreateDeviceOption(data);
+        return module.httpClient.httpRequest(createDeviceOpt, callback);
+    };
 
 
-/**
- *  @description Updates details of a device through API: PUT:/v1/api/accounts/{accountId}/devices/{deviceId}
- *  @param data.userToken contains the access token
- *  @param data.accountId id of the device which sends the data
- *  @param data.deviceId the id of the device
- *  @param data.body the detail to update as described in the API spec
- */
-module.exports.updateDeviceDetails = function(data, callback) {
-    var updateDeviceDetailsOpt = new adminDef.devices.UpdateDeviceDetailsOption(data);
-    return httpClient.httpRequest(updateDeviceDetailsOpt, callback);
-};
+    /**
+     *  @description Gets details of a device through API: GET:/v1/api/accounts/{accountId}/devices/{deviceId}
+     *  @param data.userToken contains the access token
+     *  @param data.accountId id of the device which sends the data
+     *  @param data.deviceId the id of the device
+     */
+    module.getDeviceDetails = function(data, callback) {
+        var getDeviceDetailsOpt = new module.adminDef.devices.GetDeviceDetailsOption(data);
+        return module.httpClient.httpRequest(getDeviceDetailsOpt, callback);
+    };
 
 
-/**
- *  @description Delete device through API: DELETE:/v1/api/accounts/{accountId}/devices/{deviceId}
- *  @param data.userToken contains the access token
- *  @param data.accountId id of the device which sends the data
- *  @param data.deviceId the id of the device
- */
-module.exports.deleteDevice = function(data, callback) {
-    var deleteDeviceOpt = new adminDef.devices.DeleteDeviceOption(data);
-    return httpClient.httpRequest(deleteDeviceOpt, callback);
-};
+    /**
+     *  @description Updates details of a device through API: PUT:/v1/api/accounts/{accountId}/devices/{deviceId}
+     *  @param data.userToken contains the access token
+     *  @param data.accountId id of the device which sends the data
+     *  @param data.deviceId the id of the device
+     *  @param data.body the detail to update as described in the API spec
+     */
+    module.updateDeviceDetails = function(data, callback) {
+        var updateDeviceDetailsOpt = new module.adminDef.devices.UpdateDeviceDetailsOption(data);
+        return module.httpClient.httpRequest(updateDeviceDetailsOpt, callback);
+    };
 
 
-/**
- *  @description Activate device through API: DELETE:/v1/api/devices/{deviceId}/activation
- *  @param data.userToken contains the access token
- *  @param data.deviceId the id of the device
- *  @param data.accountId the id of the account
- *  @param data.body contains the activation code as described in API spec
- */
-module.exports.activateDevice = function(data, callback) {
-    var activateDeviceOpt = new adminDef.devices.ActivateDeviceOption(data);
-    return httpClient.httpRequest(activateDeviceOpt, callback);
-};
+    /**
+     *  @description Delete device through API: DELETE:/v1/api/accounts/{accountId}/devices/{deviceId}
+     *  @param data.userToken contains the access token
+     *  @param data.accountId id of the device which sends the data
+     *  @param data.deviceId the id of the device
+     */
+    module.deleteDevice = function(data, callback) {
+        var deleteDeviceOpt = new module.adminDef.devices.DeleteDeviceOption(data);
+        return module.httpClient.httpRequest(deleteDeviceOpt, callback);
+    };
 
 
-/**
- *  @description Add component to device through API: POST:/v1/api/accounts/{accountId}/devices/{deviceId}/components
- *  @param data.userToken contains the access token
- *  @param data.deviceId the id of the device
- *  @param data.accouontId the id of the account
- *  @param data.body contains the component definition as described in API spec
- */
-module.exports.addDeviceComponent = function(data, callback) {
-    var addDeviceComponentOpt = new adminDef.devices.AddDeviceComponentOption(data);
-    return httpClient.httpRequest(addDeviceComponentOpt, callback);
-};
+    /**
+     *  @description Activate device through API: DELETE:/v1/api/devices/{deviceId}/activation
+     *  @param data.userToken contains the access token
+     *  @param data.deviceId the id of the device
+     *  @param data.accountId the id of the account
+     *  @param data.body contains the activation code as described in API spec
+     */
+    module.activateDevice = function(data, callback) {
+        var activateDeviceOpt = new module.adminDef.devices.ActivateDeviceOption(data);
+        return module.httpClient.httpRequest(activateDeviceOpt, callback);
+    };
 
 
-/**
- *  @description Delete component of device through API: DELETE:/v1/api/accounts/{accountId}/devices/{deviceId}/components/{cid}
- *  @param data.userToken contains the access token
- *  @param data.deviceId the id of the device
- *  @param data.accountId the id of the account
- *  @param data.cid the id of the commponent
- */
-module.exports.deleteDeviceComponent = function(data, callback) {
-    var deleteDeviceComponentOpt = new adminDef.devices.DeleteDeviceComponentOption(data);
-    return httpClient.httpRequest(deleteDeviceComponentOpt, callback);
-};
+    /**
+     *  @description Add component to device through API: POST:/v1/api/accounts/{accountId}/devices/{deviceId}/components
+     *  @param data.userToken contains the access token
+     *  @param data.deviceId the id of the device
+     *  @param data.accouontId the id of the account
+     *  @param data.body contains the component definition as described in API spec
+     */
+    module.addDeviceComponent = function(data, callback) {
+        var addDeviceComponentOpt = new module.adminDef.devices.AddDeviceComponentOption(data);
+        return module.httpClient.httpRequest(addDeviceComponentOpt, callback);
+    };
 
 
-/*
- * The following methods should be executed only with device-token not with user/admin token 
- *
- */
+    /**
+     *  @description Delete component of device through API: DELETE:/v1/api/accounts/{accountId}/devices/{deviceId}/components/{cid}
+     *  @param data.userToken contains the access token
+     *  @param data.deviceId the id of the device
+     *  @param data.accountId the id of the account
+     *  @param data.cid the id of the commponent
+     */
+    module.deleteDeviceComponent = function(data, callback) {
+        var deleteDeviceComponentOpt = new module.adminDef.devices.DeleteDeviceComponentOption(data);
+        return module.httpClient.httpRequest(deleteDeviceComponentOpt, callback);
+    };
 
 
-/**
- * It passes to a callback the access token
- */
-module.exports.registerDevice = function(data, callback) {
-    var devOpt = new adminDef.devices.DeviceActivateOption(data);
-    return httpClient.httpRequest(devOpt, callback);
-};
-/**
- * @description It will put a data to analytics UI using device id at data.
- * @param data the data contain the device id and metadata at body to sent
- * @param callback
- */
-module.exports.updateMetadataDevice = function(data, callback) {
-    var metaDataOpt = new adminDef.devices.DeviceMetadataOption(data);
-    return httpClient.httpRequest(metaDataOpt, callback);
-};
-
-module.exports.submitData = function (data, callback) {
-    var submitDataOpt = new adminDef.devices.DeviceSubmitDataOption(data);
-    return httpClient.httpRequest(submitDataOpt, callback);
-};
-
-/**
- * @description Gets a device from analytics UI using device id in data.
- * @param data contains device id and metadata in body to sent
- * @param callback
- */
-
-module.exports.getDevice = function(data, callback) {
-    var metaDataOpt = new adminDef.devices.DeviceGetOption(data);
-    return httpClient.httpRequest(metaDataOpt, callback);
-};
+    /*
+     * The following methods should be executed only with device-token not with user/admin token 
+     *
+     */
 
 
+    /**
+     * It passes to a callback the access token
+     */
+    module.registerDevice = function(data, callback) {
+        var devOpt = new module.adminDef.devices.DeviceActivateOption(data);
+        return module.httpClient.httpRequest(devOpt, callback);
+    };
+    /**
+     * @description It will put a data to analytics UI using device id at data.
+     * @param data the data contain the device id and metadata at body to sent
+     * @param callback
+     */
+    module.updateMetadataDevice = function(data, callback) {
+        var metaDataOpt = new module.adminDef.devices.DeviceMetadataOption(data);
+        return module.httpClient.httpRequest(metaDataOpt, callback);
+    };
 
-/**
- * The function will Register all components to Analytics using POST
- * if the body is an Array it will send individual post since the bulk api is
- * not ready
- * @param data
- * @param callback
- */
-module.exports.registerComponents = function (data, callback) {
-    var tmp = data.body;
-    delete data.body;
-    //TODO this shall be replace with Parallel
-    // when the bulk operation be ready.
-    if (!Array.isArray(tmp)) {
-        tmp = [tmp];
-    }
-    async.parallel(tmp.map(function (comp) {
-        var tempData = JSON.parse(JSON.stringify(data));
-        tempData.body = comp;
-        return function (done) {
-            var compOpt = new adminDef.devices.DeviceComponentOption(tempData);
-            httpClient.httpRequest(compOpt, function(err, response) {
-                done(err, response);
-            });
-        };
-    }),
-    function (err, response) {
-        callback(err, response);
-    });
-};
+    module.submitData = function (data, callback) {
+        var submitDataOpt = new module.adminDef.devices.DeviceSubmitDataOption(data);
+        return module.httpClient.httpRequest(submitDataOpt, callback);
+    };
+
+    /**
+     * @description Gets a device from analytics UI using device id in data.
+     * @param data contains device id and metadata in body to sent
+     * @param callback
+     */
+
+    module.getDevice = function(data, callback) {
+        var metaDataOpt = new module.adminDef.devices.DeviceGetOption(data);
+        return module.httpClient.httpRequest(metaDataOpt, callback);
+    };
+
+
+
+    /**
+     * The function will Register all components to Analytics using POST
+     * if the body is an Array it will send individual post since the bulk api is
+     * not ready
+     * @param data
+     * @param callback
+     */
+    module.registerComponents = function (data, callback) {
+        var tmp = data.body;
+        delete data.body;
+        //TODO this shall be replace with Parallel
+        // when the bulk operation be ready.
+        if (!Array.isArray(tmp)) {
+            tmp = [tmp];
+        }
+        async.parallel(tmp.map(function (comp) {
+            var tempData = JSON.parse(JSON.stringify(data));
+            tempData.body = comp;
+            return function (done) {
+                var compOpt = new module.adminDef.devices.DeviceComponentOption(tempData);
+                module.httpClient.httpRequest(compOpt, function(err, response) {
+                    done(err, response);
+                });
+            };
+        }),
+        function (err, response) {
+            callback(err, response);
+        });
+    };
+
+    return module;
+}

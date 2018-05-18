@@ -19,13 +19,21 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-var assert = require('chai').assert,
-    rewire = require('rewire');
+var assert = require('chai').assert;
 
 var fileToTest = "../api/rest/iot.control.js";
 
 describe(fileToTest, function() {
-    var toTest = rewire(fileToTest);
+    var config = {
+        connector: {
+            rest: {
+                protocol: "http",
+                host: "myapi",
+                port: 1000
+            }
+        },
+    };
+    var toTest = require(fileToTest)(config);
     var logger = {
         info : function() {},
         error : function() {},
@@ -72,7 +80,7 @@ describe(fileToTest, function() {
             return optData;
         }
         httpClientMock.httpRequest = function (opt, cb) {
-            assert.deepEqual(opt, optData, "the     it('Shall send alerts params for get method to server', function(done){option object were missed");
+            assert.deepEqual(opt, optData, "the option object were missed");
             cb(reData);
         }
         var callBack = function(response) {
@@ -80,8 +88,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         }
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.control", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.control = Option;
         toTest.sendActuationCommand(data, callBack);
     });
     it('Shall send save complex command for command', function(done) {
@@ -107,7 +115,7 @@ describe(fileToTest, function() {
             return optData;
         }
         httpClientMock.httpRequest = function (opt, cb) {
-            assert.deepEqual(opt, optData, "the     it('Shall send alert detail params for get method to server', function(done){option object were missed");
+            assert.deepEqual(opt, optData, "the option object were missed");
             cb(reData);
         }
         var callBack = function(response) {
@@ -115,8 +123,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         }
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.control", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.control = Option;
         toTest.saveComplexCommand(data, callBack);
     });
     it('Shall send get complex command request', function(done) {
@@ -142,7 +150,7 @@ describe(fileToTest, function() {
             return optData;
         }
         httpClientMock.httpRequest = function (opt, cb) {
-            assert.deepEqual(opt, optData, "the     it('Shall send close alert params for put method to server', function(done){option object were missed");
+            assert.deepEqual(opt, optData, "the option object were missed");
             cb(reData);
         }
         var callBack = function(response) {
@@ -150,8 +158,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         }
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.control", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.control = Option;
         toTest.getComplexCommands(data, callBack);
     });
     it('Shall send delete complex command request', function(done) {
@@ -177,7 +185,7 @@ describe(fileToTest, function() {
             return optData;
         }
         httpClientMock.httpRequest = function (opt, cb) {
-            assert.deepEqual(opt, optData, "the     it('Shall send close alert params for put method to server', function(done){option object were missed");
+            assert.deepEqual(opt, optData, "the option object were missed");
             cb(reData);
         }
         var callBack = function(response) {
@@ -185,8 +193,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         }
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.control", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.control = Option;
         toTest.deleteComplexCommand(data, callBack);
     });
     it('Shall send update complex command request', function(done) {
@@ -212,7 +220,7 @@ describe(fileToTest, function() {
             return optData;
         }
         httpClientMock.httpRequest = function (opt, cb) {
-            assert.deepEqual(opt, optData, "the     it('Shall send close alert params for put method to server', function(done){option object were missed");
+            assert.deepEqual(opt, optData, "the option object were missed");
             cb(reData);
         }
         var callBack = function(response) {
@@ -220,8 +228,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         }
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.control", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.control = Option;
         toTest.updateComplexCommand(data, callBack);
     });
     it('Shall send delete complex command request', function(done) {
@@ -247,7 +255,7 @@ describe(fileToTest, function() {
             return optData;
         }
         httpClientMock.httpRequest = function (opt, cb) {
-            assert.deepEqual(opt, optData, "the     it('Shall send close alert params for put method to server', function(done){option object were missed");
+            assert.deepEqual(opt, optData, "the option object were missed");
             cb(reData);
         }
         var callBack = function(response) {
@@ -255,8 +263,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         }
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.control", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.control = Option;
         toTest.pullActuations(data, callBack);
     });
 });

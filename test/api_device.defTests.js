@@ -22,16 +22,12 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-var assert =  require('chai').assert,
-    rewire = require('rewire');
+var assert =  require('chai').assert;
 var url = require('url');
-
-var GlobalConfig = require('../config');
 
 var fileToTest = "../api/rest/devices.def.js";
 
 describe(fileToTest, function() {
-    var toTest = rewire(fileToTest);
     var logger  = {
         info : function() {},
         error : function() {},
@@ -49,16 +45,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    device: {
-                        act: 'devices/{deviceid}/activation',
-                        update: 'devices/{deviceid}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             deviceId: 20000,
             body: {
@@ -68,10 +59,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.DeviceActivateOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/devices/20000/activation", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "PUT", "The verb is incorrect");
@@ -87,16 +79,10 @@ describe(fileToTest, function() {
                     },
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    device: {
-                        act: 'devices/{deviceid}/activation',
-                        update: 'devices/{deviceid}'
-                    }
+                    port: 1000
                 }
             }
-
         };
-        toTest.__set__('config', config);
         var data = {
             deviceId: 20000,
             body: {
@@ -106,37 +92,30 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.DeviceMetadataOption(data);
-
         var urlD = url.parse(deTest.url);
-
-        assert.equal(urlD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urlD.port, GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
         assert.equal(urlD.pathname, "/v1/api/devices/20000", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "PUT", "The verb is incorrect");
-        //var Proxy = GlobalConfig.api.proxy.host + ":" + GlobalConfig.api.proxy.port;
-        //assert.equal(deTest.proxy, Proxy, "The verb is incorrect");
         done();
     });
     it('Shall Return the DeviceComponentOption for Request  >', function(done) {
         var config = {
-            api: {
-                proxy: {
-                    host: "myprox",
-                    port: 2222
-                },
-                protocol: "http",
-                host: "myapi",
-                port: 1000,
-                device: {
-                    act: 'devices/{deviceid}/activation',
-                    update: 'devices/{deviceid}',
-                    components: '/devices/{deviceid}/components'
+            connector: {
+                rest: {
+                    proxy: {
+                        host: "myprox",
+                        port: 2222
+                    },
+                    protocol: "http",
+                    host: "myapi",
+                    port: 1000
                 }
-            },
+            }
         };
-        toTest.__set__('config', config);
         var data = {
             deviceId: 20000,
             deviceToken: "Thisis Mytoken",
@@ -147,18 +126,14 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.DeviceComponentOption(data);
-
         var urlD = url.parse(deTest.url);
-
-
-        assert.equal(urlD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urlD.port, GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
         assert.equal(urlD.pathname, "/v1/api/devices/20000/components", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "POST", "The verb is incorrect");
-        // var Proxy = config.api.proxy.host + ":" + config.api.proxy.port;
-        //  assert.equal(deTest.proxy, Proxy, "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
         assert.property(deTest.headers, "Content-type", "The content Type has not Set");
         assert.property(deTest.headers, "Authorization", "The Authorization Header has not set");
@@ -168,25 +143,18 @@ describe(fileToTest, function() {
     });
     it('Shall Return the DeviceComponentOption for Request  >', function(done) {
         var config = {
-            api: {
-                proxy: {
-                    host: "myprox",
-                    port: 2222
-                },
-                protocol: "http",
-                host: "myapi3",
-                port: 1000,
-                device: {
-                    act: 'devices/{deviceid}/activation',
-                    update: 'devices/{deviceid}',
-                    components: '/devices/{deviceid}/components'
-                },
-                submit: {
-                    data: '/v1/api/data/{deviceid}'
+            connector: {
+                rest: {
+                    proxy: {
+                        host: "myprox",
+                        port: 2222
+                    },
+                    protocol: "http",
+                    host: "myapi3",
+                    port: 1000
                 }
             }
         };
-        toTest.__set__('config', config);
         var data = {
             deviceId: 20022,
             deviceToken: "Thisis Mytoken",
@@ -197,13 +165,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.DeviceSubmitDataOption(data);
-
         var urlD = url.parse(deTest.url);
-
-
-        assert.equal(urlD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urlD.port, GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
         assert.equal(urlD.pathname, "/v1/api/data/20022", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "POST", "The verb is incorrect");

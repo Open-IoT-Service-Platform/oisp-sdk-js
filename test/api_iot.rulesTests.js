@@ -22,13 +22,21 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-var assert =  require('chai').assert,
-    rewire = require('rewire');
+var assert =  require('chai').assert;
 
 var fileToTest = "../api/rest/iot.rules.js";
 
 describe(fileToTest, function() {
-    var toTest = rewire(fileToTest);
+    var config = {
+        connector: {
+            rest: {
+                protocol: "http",
+                host: "myapi",
+                port: 1000
+            }
+        },
+    };
+    var toTest = require(fileToTest)(config);
     var logger  = {
         info : function() {},
         error : function() {},
@@ -89,8 +97,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.createRule(data, callBack);
     });
 
@@ -126,8 +134,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.deleteRule(data, callBack);
     });
 
@@ -162,8 +170,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.getRules(data, callBack);
     });
 
@@ -199,8 +207,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.updateRule(data, callBack);
     });
 
@@ -236,8 +244,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.getRuleDetails(data, callBack);
     });
 
@@ -273,8 +281,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.updateRuleStatus  (data, callBack);
     });
 
@@ -310,12 +318,12 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.createDraftRule(data, callBack);
     });
 
-    it('Shall send delete rule draft and Control the Response from rule dfaft deletion >', function(done) {
+    it('Shall send delete rule draft and Control the Response from rule draft deletion >', function(done) {
 
         var optData = {
             method: 'POST',
@@ -347,8 +355,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.deleteDraftRule(data, callBack);
     });
 
@@ -384,8 +392,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.rules", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.rules = Option;
         toTest.cloneRule(data, callBack);
     });
 });

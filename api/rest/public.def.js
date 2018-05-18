@@ -24,50 +24,51 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var url = require('url');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
+module.exports = function(config) {
+    var url = require('url');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-//variable to be returned
-var IoTKiT = {};
+    var module = {};
 
-/**
- * Connection attributes to redirect to Intel Itendtity Main Page
- */
-function HealthOption() {
-    this.pathname = api.HEALTH;
-    this.token = null;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
+    /**
+     * Connection attributes to redirect to Intel Itendtity Main Page
+     */
+    function HealthOption() {
+        this.pathname = api.HEALTH;
+        this.token = null;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+    }
+    HealthOption.prototype = new ConnectionOptions();
+    HealthOption.prototype.constructor = HealthOption;
+    module.HealthOption = HealthOption;
+
+    function ExternalInfoOption() {
+        this.pathname = '';
+        this.token = null;
+        ConnectionOptions.call(this);
+        var urlT =  {
+            hostname: 'ipinfo.io',
+            port: 80,
+            protocol: 'http'
+        };
+        this.url = url.format(urlT);
+        this.method = 'GET';
+    }
+    ExternalInfoOption.prototype = new ConnectionOptions();
+    ExternalInfoOption.prototype.constructor = ExternalInfoOption;
+    module.ExternalInfoOption = ExternalInfoOption;
+
+    function TimeOption() {
+        this.pathname = api.TIME;
+        this.token = null;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+    }
+    TimeOption.prototype = new ConnectionOptions();
+    TimeOption.prototype.constructor = TimeOption;
+    module.TimeOption = TimeOption;
+
+    return module;
 }
-HealthOption.prototype = new ConnectionOptions();
-HealthOption.prototype.constructor = HealthOption;
-IoTKiT.HealthOption = HealthOption;
-
-function ExternalInfoOption() {
-    this.pathname = '';
-    this.token = null;
-    ConnectionOptions.call(this);
-    var urlT =  {
-        hostname: 'ipinfo.io',
-        port: 80,
-        protocol: 'http'
-    };
-    this.url = url.format(urlT);
-    this.method = 'GET';
-}
-ExternalInfoOption.prototype = new ConnectionOptions();
-ExternalInfoOption.prototype.constructor = ExternalInfoOption;
-IoTKiT.ExternalInfoOption = ExternalInfoOption;
-
-function TimeOption() {
-    this.pathname = api.TIME;
-    this.token = null;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-}
-TimeOption.prototype = new ConnectionOptions();
-TimeOption.prototype.constructor = TimeOption;
-IoTKiT.TimeOption = TimeOption;
-
-module.exports = IoTKiT;

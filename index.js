@@ -23,8 +23,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-module.exports = {
-    api: require('./api'),
-    config: require('./config'),
-    lib: require('./lib')
+module.exports = function(config) {
+    var module = {};
+    
+    module.api = require('./api')(config);
+    module.lib = require('./lib')(config);
+    
+    return module;
 };

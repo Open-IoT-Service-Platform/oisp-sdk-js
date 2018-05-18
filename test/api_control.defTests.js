@@ -22,15 +22,11 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 var assert =  require('chai').assert;
-rewire = require('rewire'),
-url = require('url');
-
-var GlobalConfig = require('../config');
+var url = require('url');
 
 var fileToTest = "../api/rest/control.def.js";
 
 describe(fileToTest, function() {
-    var toTest = rewire(fileToTest);
     var logger = {
         info : function() {},
         error : function()  {},
@@ -48,15 +44,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    control: {
-                        send_actuation_command: '/v1/api/accounts/{accountId}/control'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             body: {
@@ -66,10 +58,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.SendActuationCommandOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/control", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "POST", "The verb is incorrect");
@@ -81,15 +74,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    control: {
-                        save_complex_command: '/v1/api/accounts/{accountId}/control/commands/{commandName}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             commandName: "FlashingLight",
@@ -100,10 +89,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.SaveComplexCommandOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/control/commands/FlashingLight", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "POST", "The verb is incorrect");
@@ -115,15 +105,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    control: {
-                        get_complex_commands: '/v1/api/accounts/{accountId}/control/commands/'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             body: {
@@ -133,10 +119,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.GetComplexCommandsOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/control/commands/", "path improper formed");
         assert.equal(deTest.body, undefined);
         assert.equal(deTest.method, "GET", "The verb is incorrect");
@@ -148,15 +135,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    control: {
-                        delete_complex_command: '/v1/api/accounts/{accountId}/control/commands/{commandName}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             commandName: "FlashingLight",
@@ -167,10 +150,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.DeleteComplexCommandOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/control/commands/FlashingLight", "path improper formed");
         assert.equal(deTest.body, undefined);
         assert.equal(deTest.method, "DELETE", "The verb is incorrect");
@@ -182,15 +166,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    control: {
-                        update_complex_command: '/v1/api/accounts/{accountId}/control/commands/{commandName}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             commandName: "FlashingLight",
@@ -201,10 +181,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.UpdateComplexCommandOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/control/commands/FlashingLight", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "PUT", "The verb is incorrect");
@@ -216,15 +197,11 @@ describe(fileToTest, function() {
                 rest: {
                     protocol: "http",
                     host: "myapi",
-                    port: 1000,
-                    control: {
-                        actuations: '/v1/api/accounts/{accountid}/control/devices/{deviceid}'
-                    }
+                    port: 1000
                 }
             },
 
         };
-        toTest.__set__('config', config);
         var data = {
             accountId: 20000,
             deviceId: 10000,
@@ -236,10 +213,11 @@ describe(fileToTest, function() {
             }
         };
 
+        var toTest = require(fileToTest)(config);
         var deTest = new toTest.ActuationsOption(data);
         var urD = url.parse(deTest.url);
-        assert.equal(urD.hostname, GlobalConfig.connector.rest.host, "the host data is missing");
-        assert.equal(urD.port,  GlobalConfig.connector.rest.port, "the port were missing");
+        assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
         assert.equal(urD.pathname, "/v1/api/accounts/20000/control/devices/10000", "path improper formed");
         assert.equal(deTest.body, undefined);
         assert.equal(deTest.method, "GET", "The verb is incorrect");

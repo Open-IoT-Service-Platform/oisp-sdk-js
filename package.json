@@ -24,7 +24,6 @@
     "async": "^2.5.0",
     "request": "^2.83.0",
     "tunnel": "0.0.5",
-    "websocket": "^1.0.24",
-    "winston": "^2.4.0"
+    "websocket": "^1.0.24"
   }
 }

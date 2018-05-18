@@ -24,22 +24,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var auth  = require('./auth.def');
-var users = require('./users.def');
-var accounts = require('./accounts.def');
-var data = require('./data.def');
-var devices = require('./devices.def');
-var rules = require('./rules.def');
-var control = require('./control.def');
-var alerts = require('./alerts.def');
+module.exports = function(config) {
+    var module = {};
 
-module.exports = {
-    auth: auth,
-    users: users,
-    accounts: accounts,
-    data: data,
-    devices: devices,
-    rules: rules,
-    control: control,
-    alerts: alerts
-};
+    module.auth  = require('./auth.def')(config);
+    module.users = require('./users.def')(config);
+    module.accounts = require('./accounts.def')(config);
+    module.data = require('./data.def')(config);
+    module.devices = require('./devices.def')(config);
+    module.rules = require('./rules.def')(config);
+    module.control = require('./control.def')(config);
+    module.alerts = require('./alerts.def')(config);
+    
+    return module;
+}

@@ -24,79 +24,80 @@
 
 "use strict";
 
-var common = require('../../lib/common');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
+module.exports = function(config) {
+    var common = require('../../lib/common');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-//variable to be returned
-var IoTKiT = {};
+    var module = {};
 
-function SendActuationCommandOption(data) {
-    this.pathname = common.buildPath(api.control.SEND_ACTUATION_COMMAND, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-SendActuationCommandOption.prototype = new ConnectionOptions();
-SendActuationCommandOption.prototype.constructor = SendActuationCommandOption;
-IoTKiT.SendActuationCommandOption = SendActuationCommandOption;
-
-function SaveComplexCommandOption(data) {
-    this.pathname = common.buildPath(api.control.SAVE_COMMAND, [data.accountId, data.commandName]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-SaveComplexCommandOption.prototype = new ConnectionOptions();
-SaveComplexCommandOption.prototype.constructor = SaveComplexCommandOption;
-IoTKiT.SaveComplexCommandOption = SaveComplexCommandOption;
-
-
-function GetComplexCommandsOption(data) {
-    this.pathname = common.buildPath(api.control.GET_COMMANDS, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-}
-GetComplexCommandsOption.prototype = new ConnectionOptions();
-GetComplexCommandsOption.prototype.constructor = GetComplexCommandsOption;
-IoTKiT.GetComplexCommandsOption = GetComplexCommandsOption;
-
-function DeleteComplexCommandOption(data) {
-    this.pathname = common.buildPath(api.control.DELETE_COMMAND, [data.accountId, data.commandName]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'DELETE';
-}
-DeleteComplexCommandOption.prototype = new ConnectionOptions();
-DeleteComplexCommandOption.prototype.constructor = DeleteComplexCommandOption;
-IoTKiT.DeleteComplexCommandOption = DeleteComplexCommandOption;
-
-function UpdateComplexCommandOption(data) {
-    this.pathname = common.buildPath(api.control.UPDATE_COMMAND, [data.accountId, data.commandName]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-UpdateComplexCommandOption.prototype = new ConnectionOptions();
-UpdateComplexCommandOption.prototype.constructor = UpdateComplexCommandOption;
-IoTKiT.UpdateComplexCommandOption = UpdateComplexCommandOption;
-
-
-function ActuationsOption(data) {
-    this.pathname = common.buildPath(api.control.ACTUATIONS, [data.accountId, data.deviceId]);
-    if(data.from) {
-        this.query = { from: data.from };
+    function SendActuationCommandOption(data) {
+        this.pathname = common.buildPath(api.control.SEND_ACTUATION_COMMAND, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
     }
-    this.token = data.deviceToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-}
-ActuationsOption.prototype = new ConnectionOptions();
-ActuationsOption.prototype.constructor = ActuationsOption;
-IoTKiT.ActuationsOption = ActuationsOption;
+    SendActuationCommandOption.prototype = new ConnectionOptions();
+    SendActuationCommandOption.prototype.constructor = SendActuationCommandOption;
+    module.SendActuationCommandOption = SendActuationCommandOption;
 
-module.exports = IoTKiT;
+    function SaveComplexCommandOption(data) {
+        this.pathname = common.buildPath(api.control.SAVE_COMMAND, [data.accountId, data.commandName]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    SaveComplexCommandOption.prototype = new ConnectionOptions();
+    SaveComplexCommandOption.prototype.constructor = SaveComplexCommandOption;
+    module.SaveComplexCommandOption = SaveComplexCommandOption;
+
+
+    function GetComplexCommandsOption(data) {
+        this.pathname = common.buildPath(api.control.GET_COMMANDS, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+    }
+    GetComplexCommandsOption.prototype = new ConnectionOptions();
+    GetComplexCommandsOption.prototype.constructor = GetComplexCommandsOption;
+    module.GetComplexCommandsOption = GetComplexCommandsOption;
+
+    function DeleteComplexCommandOption(data) {
+        this.pathname = common.buildPath(api.control.DELETE_COMMAND, [data.accountId, data.commandName]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+    }
+    DeleteComplexCommandOption.prototype = new ConnectionOptions();
+    DeleteComplexCommandOption.prototype.constructor = DeleteComplexCommandOption;
+    module.DeleteComplexCommandOption = DeleteComplexCommandOption;
+
+    function UpdateComplexCommandOption(data) {
+        this.pathname = common.buildPath(api.control.UPDATE_COMMAND, [data.accountId, data.commandName]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    UpdateComplexCommandOption.prototype = new ConnectionOptions();
+    UpdateComplexCommandOption.prototype.constructor = UpdateComplexCommandOption;
+    module.UpdateComplexCommandOption = UpdateComplexCommandOption;
+
+
+    function ActuationsOption(data) {
+        this.pathname = common.buildPath(api.control.ACTUATIONS, [data.accountId, data.deviceId]);
+        if(data.from) {
+            this.query = { from: data.from };
+        }
+        this.token = data.deviceToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+    }
+    ActuationsOption.prototype = new ConnectionOptions();
+    ActuationsOption.prototype.constructor = ActuationsOption;
+    module.ActuationsOption = ActuationsOption;
+
+    return module;
+}

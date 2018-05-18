@@ -1,4 +1,3 @@
 buildscripts/
 test/
 Gruntfile.js
-config/global.json

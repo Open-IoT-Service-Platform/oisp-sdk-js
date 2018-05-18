@@ -22,13 +22,21 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-var assert =  require('chai').assert,
-    rewire = require('rewire');
+var assert =  require('chai').assert;
 
 var fileToTest = "../api/rest/iot.devices.js";
 
 describe(fileToTest, function() {
-    var toTest = rewire(fileToTest);
+    var config = {
+        connector: {
+            rest: {
+                protocol: "http",
+                host: "myapi",
+                port: 1000
+            }
+        },
+    };
+    var toTest = require(fileToTest)(config);
     var logger  = {
         info : function() {},
         error : function() {},
@@ -82,8 +90,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.devices", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
         toTest.registerDevice(data, callBack);
     });
     it('Shall Sent Update Data To Server >', function(done) {
@@ -117,8 +125,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response, reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.devices", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
         toTest.updateMetadataDevice(data, callBack);
 
     });
@@ -155,8 +163,8 @@ describe(fileToTest, function() {
             assert.deepEqual(response[0], reData, "The Data were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.devices", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
         var dataClone = JSON.parse(JSON.stringify(data));
         toTest.registerComponents(dataClone, callBack);
 
@@ -193,8 +201,8 @@ describe(fileToTest, function() {
             assert.isArray(response, "The Response were missing");
             done();
         };
-        toTest.__set__("httpClient", httpClientMock);
-        toTest.__set__("adminDef.devices", Option);
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
         var dataClone = JSON.parse(JSON.stringify(data));
         toTest.registerComponents(dataClone, callBack);
 

@@ -24,114 +24,115 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var common = require('../../lib/common');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
+module.exports = function(config) {
+    var common = require('../../lib/common');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-//variable to be returned
-var IoTKiT = {};
+    var module = {};
 
 
-function GetUserInfoOption(data) {
-    this.pathname = common.buildPath(api.user.GET, data.userId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
+    function GetUserInfoOption(data) {
+        this.pathname = common.buildPath(api.user.GET, data.userId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetUserInfoOption.prototype = new ConnectionOptions();
+    GetUserInfoOption.prototype.constructor = GetUserInfoOption;
+    module.GetUserInfoOption = GetUserInfoOption;
+
+
+    function UpdateUserInfoOption(data) {
+        this.pathname = common.buildPath(api.user.GET, data.userId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    UpdateUserInfoOption.prototype = new ConnectionOptions();
+    UpdateUserInfoOption.prototype.contstructor = UpdateUserInfoOption;
+    module.UpdateUserInfoOption = UpdateUserInfoOption;
+
+
+    function DeleteUserOption(data) {
+        this.pathname = common.buildPath(api.user.GET, data.deleteUserId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+        this.body = null;
+    }
+    DeleteUserOption.prototype = new ConnectionOptions();
+    DeleteUserOption.prototype.contstructor = DeleteUserOption;
+    module.DeleteUserOption = DeleteUserOption;
+
+
+    function RequestUserPasswordChangeOption(data) {
+        this.pathname = common.buildPath(api.user.FORGOT_PASSWORD);
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    RequestUserPasswordChangeOption.prototype = new ConnectionOptions();
+    RequestUserPasswordChangeOption.prototype.contstructor = RequestUserPasswordChangeOption;
+    module.RequestUserPasswordChangeOption = RequestUserPasswordChangeOption;
+
+
+    function UpdateUserPasswordOption(data) {
+        this.pathname = common.buildPath(api.user.FORGOT_PASSWORD);
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    UpdateUserPasswordOption.prototype = new ConnectionOptions();
+    UpdateUserPasswordOption.prototype.contstructor = UpdateUserPasswordOption;
+    module.UpdateUserPasswordOption = UpdateUserPasswordOption;
+
+
+    function ChangeUserPasswordOption(data) {
+        this.pathname = common.buildPath(api.user.CHANGE_PASSWORD, data.username);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    ChangeUserPasswordOption.prototype = new ConnectionOptions();
+    ChangeUserPasswordOption.prototype.contstructor = ChangeUserPasswordOption;
+    module.ChangeUserPasswordOption = ChangeUserPasswordOption;
+
+
+    function RequestUserActivationOption(data) {
+        this.pathname = common.buildPath(api.user.REQUEST_ACTIVATION);
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    RequestUserActivationOption.prototype = new ConnectionOptions();
+    RequestUserActivationOption.prototype.contstructor = RequestUserActivationOption;
+    module.RequestUserActivationOption = RequestUserActivationOption;
+
+
+    function AddUserOption(data) {
+        this.pathname = common.buildPath(api.user.ADD);
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    AddUserOption.prototype = new ConnectionOptions();
+    AddUserOption.prototype.contstructor = AddUserOption;
+    module.AddUserOption = AddUserOption;
+
+
+    function ActivateUserOption(data) {
+        this.pathname = common.buildPath(api.user.ACTIVATE);
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    ActivateUserOption.prototype = new ConnectionOptions();
+    ActivateUserOption.prototype.contstructor = ActivateUserOption;
+    module.ActivateUserOption = ActivateUserOption;
+
+    return module;
 }
-GetUserInfoOption.prototype = new ConnectionOptions();
-GetUserInfoOption.prototype.constructor = GetUserInfoOption;
-IoTKiT.GetUserInfoOption = GetUserInfoOption;
-
-
-function UpdateUserInfoOption(data) {
-    this.pathname = common.buildPath(api.user.GET, data.userId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-UpdateUserInfoOption.prototype = new ConnectionOptions();
-UpdateUserInfoOption.prototype.contstructor = UpdateUserInfoOption;
-IoTKiT.UpdateUserInfoOption = UpdateUserInfoOption;
-
-
-function DeleteUserOption(data) {
-    this.pathname = common.buildPath(api.user.GET, data.deleteUserId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'DELETE';
-    this.body = null;
-}
-DeleteUserOption.prototype = new ConnectionOptions();
-DeleteUserOption.prototype.contstructor = DeleteUserOption;
-IoTKiT.DeleteUserOption = DeleteUserOption;
-
-
-function RequestUserPasswordChangeOption(data) {
-    this.pathname = common.buildPath(api.user.FORGOT_PASSWORD);
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-RequestUserPasswordChangeOption.prototype = new ConnectionOptions();
-RequestUserPasswordChangeOption.prototype.contstructor = RequestUserPasswordChangeOption;
-IoTKiT.RequestUserPasswordChangeOption = RequestUserPasswordChangeOption;
-
-
-function UpdateUserPasswordOption(data) {
-    this.pathname = common.buildPath(api.user.FORGOT_PASSWORD);
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-UpdateUserPasswordOption.prototype = new ConnectionOptions();
-UpdateUserPasswordOption.prototype.contstructor = UpdateUserPasswordOption;
-IoTKiT.UpdateUserPasswordOption = UpdateUserPasswordOption;
-
-
-function ChangeUserPasswordOption(data) {
-    this.pathname = common.buildPath(api.user.CHANGE_PASSWORD, data.username);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-ChangeUserPasswordOption.prototype = new ConnectionOptions();
-ChangeUserPasswordOption.prototype.contstructor = ChangeUserPasswordOption;
-IoTKiT.ChangeUserPasswordOption = ChangeUserPasswordOption;
-
-
-function RequestUserActivationOption(data) {
-    this.pathname = common.buildPath(api.user.REQUEST_ACTIVATION);
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-RequestUserActivationOption.prototype = new ConnectionOptions();
-RequestUserActivationOption.prototype.contstructor = RequestUserActivationOption;
-IoTKiT.RequestUserActivationOption = RequestUserActivationOption;
-
-
-function AddUserOption(data) {
-    this.pathname = common.buildPath(api.user.ADD);
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-AddUserOption.prototype = new ConnectionOptions();
-AddUserOption.prototype.contstructor = AddUserOption;
-IoTKiT.AddUserOption = AddUserOption;
-
-
-function ActivateUserOption(data) {
-    this.pathname = common.buildPath(api.user.ACTIVATE);
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
-}
-ActivateUserOption.prototype = new ConnectionOptions();
-ActivateUserOption.prototype.contstructor = ActivateUserOption;
-IoTKiT.ActivateUserOption = ActivateUserOption;
-
-module.exports = IoTKiT;

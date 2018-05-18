@@ -24,107 +24,107 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var common = require('../../lib/common');
-var api = require('./api');
-var ConnectionOptions = require('./iot.connection.def');
+module.exports = function(config) {
+    var common = require('../../lib/common');
+    var api = require('./api');
+    var ConnectionOptions = require('./iot.connection.def')(config);
 
-//variable to be returned
-var IoTKiT = {};
+    var module = {};
 
-function CreateAccountOption(data) {
-    this.pathname = common.buildPath(api.accounts.CREATE);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'POST';
-    this.body = JSON.stringify(data.body);
+    function CreateAccountOption(data) {
+        this.pathname = common.buildPath(api.accounts.CREATE);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    CreateAccountOption.prototype = new ConnectionOptions();
+    CreateAccountOption.prototype.constructor = CreateAccountOption;
+    module.CreateAccountOption = CreateAccountOption;
+
+
+    function GetAccountInfoOption(data) {
+        this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetAccountInfoOption.prototype = new ConnectionOptions();
+    GetAccountInfoOption.prototype.constructor = GetAccountInfoOption;
+    module.GetAccountInfoOption = GetAccountInfoOption;
+
+
+    function UpdateAccountOption(data) {
+        this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    UpdateAccountOption.prototype = new ConnectionOptions();
+    UpdateAccountOption.prototype.constructor = UpdateAccountOption;
+    module.UpdateAccountOption = UpdateAccountOption;
+
+
+    function DeleteAccountOption(data) {
+        this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+        this.body = null;
+    }
+    DeleteAccountOption.prototype = new ConnectionOptions();
+    DeleteAccountOption.prototype.constructor = DeleteAccountOption;
+    module.DeleteAccountOption = DeleteAccountOption;
+
+
+    function GetAccountActivationCodeOption(data) {
+        this.pathname = common.buildPath(api.accounts.ACTIVATION_CODE, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetAccountActivationCodeOption.prototype = new ConnectionOptions();
+    GetAccountActivationCodeOption.prototype.constructor = GetAccountActivationCodeOption;
+    module.GetAccountActivationCodeOption = GetAccountActivationCodeOption;
+
+
+    function RefreshAccountActivationCodeOption(data) {
+        this.pathname = common.buildPath(api.accounts.REFRESH, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = null;
+    }
+    RefreshAccountActivationCodeOption.prototype = new ConnectionOptions();
+    RefreshAccountActivationCodeOption.prototype.constructor = RefreshAccountActivationCodeOption;
+    module.RefreshAccountActivationCodeOption = RefreshAccountActivationCodeOption;
+
+
+    function ChangeAccountUserOption(data) {
+        this.pathname = common.buildPath(api.accounts.USER_ID, [data.accountId, data.userId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    ChangeAccountUserOption.prototype = new ConnectionOptions();
+    ChangeAccountUserOption.prototype.constructor = ChangeAccountUserOption;
+    module.ChangeAccountUserOption = ChangeAccountUserOption;
+
+
+    function GetAccountUsersOption(data) {
+        this.pathname = common.buildPath(api.accounts.USERS, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetAccountUsersOption.prototype = new ConnectionOptions();
+    GetAccountUsersOption.prototype.constructor = GetAccountUsersOption;
+    module.GetAccountUsersOption = GetAccountUsersOption;
+
+    return module;
 }
-CreateAccountOption.prototype = new ConnectionOptions();
-CreateAccountOption.prototype.constructor = CreateAccountOption;
-IoTKiT.CreateAccountOption = CreateAccountOption;
-
-
-function GetAccountInfoOption(data) {
-    this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
-}
-GetAccountInfoOption.prototype = new ConnectionOptions();
-GetAccountInfoOption.prototype.constructor = GetAccountInfoOption;
-IoTKiT.GetAccountInfoOption = GetAccountInfoOption;
-
-
-function UpdateAccountOption(data) {
-    this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-UpdateAccountOption.prototype = new ConnectionOptions();
-UpdateAccountOption.prototype.constructor = UpdateAccountOption;
-IoTKiT.UpdateAccountOption = UpdateAccountOption;
-
-
-function DeleteAccountOption(data) {
-    this.pathname = common.buildPath(api.accounts.ACCOUNT_ID, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'DELETE';
-    this.body = null;
-}
-DeleteAccountOption.prototype = new ConnectionOptions();
-DeleteAccountOption.prototype.constructor = DeleteAccountOption;
-IoTKiT.DeleteAccountOption = DeleteAccountOption;
-
-
-function GetAccountActivationCodeOption(data) {
-    this.pathname = common.buildPath(api.accounts.ACTIVATION_CODE, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
-}
-GetAccountActivationCodeOption.prototype = new ConnectionOptions();
-GetAccountActivationCodeOption.prototype.constructor = GetAccountActivationCodeOption;
-IoTKiT.GetAccountActivationCodeOption = GetAccountActivationCodeOption;
-
-
-function RefreshAccountActivationCodeOption(data) {
-    this.pathname = common.buildPath(api.accounts.REFRESH, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = null;
-}
-RefreshAccountActivationCodeOption.prototype = new ConnectionOptions();
-RefreshAccountActivationCodeOption.prototype.constructor = RefreshAccountActivationCodeOption;
-IoTKiT.RefreshAccountActivationCodeOption = RefreshAccountActivationCodeOption;
-
-
-function ChangeAccountUserOption(data) {
-    this.pathname = common.buildPath(api.accounts.USER_ID, [data.accountId, data.userId]);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'PUT';
-    this.body = JSON.stringify(data.body);
-}
-ChangeAccountUserOption.prototype = new ConnectionOptions();
-ChangeAccountUserOption.prototype.constructor = ChangeAccountUserOption;
-IoTKiT.ChangeAccountUserOption = ChangeAccountUserOption;
-
-
-function GetAccountUsersOption(data) {
-    this.pathname = common.buildPath(api.accounts.USERS, data.accountId);
-    this.token = data.userToken;
-    ConnectionOptions.call(this);
-    this.method = 'GET';
-    this.body = null;
-}
-GetAccountUsersOption.prototype = new ConnectionOptions();
-GetAccountUsersOption.prototype.constructor = GetAccountUsersOption;
-IoTKiT.GetAccountUsersOption = GetAccountUsersOption;
-
-
-module.exports = IoTKiT;

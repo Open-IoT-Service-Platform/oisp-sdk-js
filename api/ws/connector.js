@@ -47,7 +47,7 @@ var parseMessage = function (msg, callback) {
     }
 };
 
-function Websockets(conf, deviceInfo, logger) {
+function Websockets(conf) {
     var me = this;
     me.host = conf.connector.ws.host;
     me.port = conf.connector.ws.port;
@@ -56,7 +56,6 @@ function Websockets(conf, deviceInfo, logger) {
     me.maxRetryTime = conf.connector.ws.maxRetryTime;
     me.proxy = conf.connector.ws.proxy;
     me.client =  new WebSocketClient();
-    me.logger = logger;
     me.bindings = {};
     me.pingPongIntervalMs = conf.connector.ws.pingPongIntervalMs;
     me.enabledPingPong = conf.connector.ws.enablePingPong;
@@ -69,14 +68,12 @@ function Websockets(conf, deviceInfo, logger) {
         me.deviceInfo = deviceInfo;
     };
     
-    me.calculateRetryTime = function(error) {
+    me.calculateRetryTime = function() {
         if(utils.getMinutesAndSecondsFromMiliseconds(me.minRetryTime).m >= utils.getMinutesAndSecondsFromMiliseconds(me.maxRetryTime).m) {
             me.minRetryTime = me.maxRetryTime;
         } else {
             me.minRetryTime *= 2;
         }
-        var time = utils.getMinutesAndSecondsFromMiliseconds(me.minRetryTime);
-        logger.error("Websocket cannot connect. " + error + ". Next attempt in " + time.m + " minutes " + time.s + " seconds.");
     };
 
     if(me.proxy.host && me.proxy.port) {
@@ -134,7 +131,6 @@ function Websockets(conf, deviceInfo, logger) {
     };
 
     me.reconnect = function() {
-        me.logger.info("Trying to reconnect...");
         if(me.pingpongInterval) {
             clearInterval(me.pingpongInterval);
             me.pingpongInterval = null;
@@ -148,15 +144,12 @@ function Websockets(conf, deviceInfo, logger) {
         };
         me.pingpongInterval = setInterval(function() {
             if(me.lastPongTime >= me.lastPingTime) {
-                me.logger.debug('Sending PING on WS');
                 connection.sendUTF(JSON.stringify(pingMessageObject));
                 me.lastPingTime = Date.now();
             } else {
-                me.logger.info('PONG not received on time. ');
                 me.reconnect();
             }
         }, me.pingPongIntervalMs);
-        me.logger.debug('Sending PING on WS');
         connection.sendUTF(JSON.stringify(pingMessageObject));
     };
 
@@ -172,8 +165,7 @@ function Websockets(conf, deviceInfo, logger) {
                 "deviceToken": me.deviceInfo.device_token
             };
             connection.sendUTF(JSON.stringify(initMessageObject));
-            connection.on('close', function(reasonCode, description) {
-                me.logger.info('Websocket connection closed. Reason: ' + reasonCode + ' ' + description);
+            connection.on('close', function() {
                 setTimeout(function() {
                     me.reconnect();
                 }, parseInt(me.minRetryTime));
@@ -183,21 +175,18 @@ function Websockets(conf, deviceInfo, logger) {
                     if(!err) {
                         if(messageObject.code === errors.Success.ReceivedPong.code) {
                             me.lastPongTime = Date.now();
-                            me.logger.debug('Received PONG on WS');
                         } else if(messageObject.code === errors.Success.Subscribed.code) {
                             me.minRetryTime = conf.connector.ws.minRetryTime;
-                            me.logger.info('WSConnector: Connection successful to: ' + conf.connector.ws.host + ':' + conf.connector.ws.port);
                             if(me.enabledPingPong) {
                                 me.pingpong(connection);
                             }
                         } else if(messageObject.code === errors.Success.ReceivedActuation.code) {
-                            me.logger.info('Fired STATUS: ', messageObject.content);
                             me.onMessage(messageObject.content);
                         } else if(messageObject.code === errors.Errors.DatabaseError.code || messageObject.code === errors.Errors.InvalidToken.code) {
                             me.calculateRetryTime(messageObject.content);
                         }
                     } else {
-                        me.logger.error(JSON.stringify(err));
+                        // TODO
                     }
                 });
             });
@@ -216,16 +205,15 @@ function Websockets(conf, deviceInfo, logger) {
             handler: handler,
             callback: callback
         };
-        me.logger.info('Connecting to ' + conf.connector.ws.host + ':' + conf.connector.ws.port + '...');
         me.connect();
         me.listen();
     };
 }
 
 var websocket = null;
-module.exports.singleton = function (conf, deviceInfo, logger) {
+module.exports.singleton = function (conf, deviceInfo) {
     if (!websocket) {
-        websocket = new Websockets(conf, deviceInfo, logger);
+        websocket = new Websockets(conf, deviceInfo);
     }
     return websocket;
 };
