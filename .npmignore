@@ -1,4 +1,5 @@
 buildscripts/
+dist/
 test/
 Gruntfile.js
 CONTRIBUTING
