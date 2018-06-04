@@ -1,3 +1,4 @@
 buildscripts/
+dist/
 test/
 Gruntfile.js
