@@ -205,6 +205,155 @@ describe(fileToTest, function() {
         toTest.adminDef.devices = Option;
         var dataClone = JSON.parse(JSON.stringify(data));
         toTest.registerComponents(dataClone, callBack);
+    });
 
+    it('Shall Get all Tags for devices >', function(done) {
+        var optData = {
+            method: 'GET',
+            host: "myhost",
+            body: "mybody"
+        };
+
+        var data = {
+            accountId : "did"
+        };
+        var reData = {
+            x : 10,
+            y : 220,
+            ar : ["222", "223"]
+        };
+
+        Option.getDeviceTagsOpt = function (device) {
+            assert.deepEqual(device, data, "The Data is not the expected");
+            return optData;
+        };
+        httpClientMock.httpRequest = function (opt, cb) {
+            assert.deepEqual(opt, optData, "the option object were missed");
+            var er = new Error("Invalid Component");
+            cb(null, reData);
+        };
+
+        var callBack = function (error, response) {
+            assert.isNull(error, "An expected Error is detected");
+            assert.deepEqual(response, reData, "The Data were missing");
+            done();
+        };
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
+        var dataClone = JSON.parse(JSON.stringify(data));
+        toTest.getDeviceTags(dataClone, callBack)
+    });
+
+    it('Shall Get a list of devices\'s attributes for a specified account >', function(done) {
+        var optData = {
+            method: 'GET',
+            host: "myhost",
+            body: "mybody"
+        };
+
+        var data = {
+            accountId : "did"
+        };
+        var reData = {
+            x : 10,
+            y : 220,
+            ar : ["222", "223"]
+        };
+
+        Option.GetDevicesAttrOption = function (device) {
+            assert.deepEqual(device, data, "The Data is not the expected");
+            return optData;
+        };
+        httpClientMock.httpRequest = function (opt, cb) {
+            assert.deepEqual(opt, optData, "the option object were missed");
+            var er = new Error("Invalid Component");
+            cb(null, reData);
+        };
+
+        var callBack = function (error, response) {
+            assert.isNull(error, "An expected Error is detected");
+            assert.deepEqual(response, reData, "The Data were missing");
+            done();
+        };
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
+        var dataClone = JSON.parse(JSON.stringify(data));
+        toTest.getDeviceAttributes(dataClone, callBack)
+    });
+
+    it('Shall counts devices >', function(done) {
+        var optData = {
+            method: 'POST',
+            host: "myhost",
+            body: "mybody"
+        };
+
+        var data = {
+            accountId : "did",
+            body: { data: "message" }
+        };
+        var reData = {
+            x : 10,
+            y : 220,
+            ar : ["222", "223"]
+        };
+
+        Option.CountsDevicesOption = function (device) {
+            assert.deepEqual(device, data, "The Data is not the expected");
+            return optData;
+        };
+        httpClientMock.httpRequest = function (opt, cb) {
+            assert.deepEqual(opt, optData, "the option object were missed");
+            var er = new Error("Invalid Component");
+            cb(null, reData);
+        };
+
+        var callBack = function (error, response) {
+            assert.isNull(error, "An expected Error is detected");
+            assert.deepEqual(response, reData, "The Data were missing");
+            done();
+        };
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
+        var dataClone = JSON.parse(JSON.stringify(data));
+        toTest.countDevices(dataClone, callBack)
+    });
+
+    it('Shall search devices based on filters and query parameters>', function(done) {
+        var optData = {
+            method: 'POST',
+            host: "myhost",
+            body: "mybody"
+        };
+
+        var data = {
+            accountId : "did",
+            body: { data: "message" }
+        };
+        var reData = {
+            x : 10,
+            y : 220,
+            ar : ["222", "223"]
+        };
+
+        Option.SearchDevicesOption = function (device) {
+            assert.deepEqual(device, data, "The Data is not the expected");
+            return optData;
+        };
+        httpClientMock.httpRequest = function (opt, cb) {
+            assert.deepEqual(opt, optData, "the option object were missed");
+            var er = new Error("Invalid Component");
+            cb(null, reData);
+        };
+
+        var callBack = function (error, response) {
+            assert.isNull(error, "An expected Error is detected");
+            assert.deepEqual(response, reData, "The Data were missing");
+            done();
+        };
+        toTest.httpClient = httpClientMock;
+        toTest.adminDef.devices = Option;
+        var dataClone = JSON.parse(JSON.stringify(data));
+        toTest.searchDevices(dataClone, callBack)
     });
 });

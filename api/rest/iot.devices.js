@@ -131,6 +131,52 @@ module.exports = function(config) {
     };
 
 
+    /**
+     *  @description Get a list of all tags from devices for the specified account through API: GET:/v1/api/accounts/{accountId}/devices/tags
+     *  @param data.userToken contains the access token
+     *  @param data.accouontId the id of the account
+     */
+    module.getDeviceTags = function(data, callback) {
+        var getDeviceTagsOpt = new module.adminDef.devices.getDeviceTagsOpt(data);
+        return module.httpClient.httpRequest(getDeviceTagsOpt, callback);
+    }
+
+
+    /**
+     *  @description Get a list of all devices's attribute for the specified account through API: GET:/v1/api/accounts/{accountId}/devices/attributes
+     *  @param data.userToken contains the access token
+     *  @param data.accouontId the id of the account
+     */
+    module.getDeviceAttributes = function(data, callback) {
+        var getDeviceAttributesOpt = new module.adminDef.devices.GetDevicesAttrOption(data);
+        return module.httpClient.httpRequest(getDeviceAttributesOpt, callback);
+    }
+
+
+    /**
+     *  @description Counts devices's based on filters. API: POST:/v1/api/accounts/{accountId}/devices/count
+     *  @param data.userToken contains the access token
+     *  @param data.accouontId the id of the account
+     *  @param data.body contains the filters as described in API spec
+     */
+    module.countDevices = function(data, callback) {
+        var countDevicesOpt = new module.adminDef.devices.CountsDevicesOption(data);
+        return module.httpClient.httpRequest(countDevicesOpt, callback);
+    }
+
+
+    /**
+     *  @description Search devices's based on filters. API: POST: /v1/api/accounts/{accountId}/devices/search
+     *  @param data.userToken contains the access token
+     *  @param data.accouontId the id of the account
+     *  @param data.body contains the filters as described in API spec
+     */
+    module.searchDevices = function(data, callback) {
+        var searchDevicesOpt = new module.adminDef.devices.SearchDevicesOption(data);
+        return module.httpClient.httpRequest(searchDevicesOpt, callback);
+    }
+
+
     /*
      * The following methods should be executed only with device-token not with user/admin token 
      *
