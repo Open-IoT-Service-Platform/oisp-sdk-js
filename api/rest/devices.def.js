@@ -42,7 +42,6 @@ module.exports = function(config) {
     GetDevicesOption.prototype.constructor = GetDevicesOption;
     module.GetDevicesOption = GetDevicesOption;
 
-
     function CreateDeviceOption(data) {
         this.pathname = common.buildPath(api.device.GET_ALL, data.accountId);
         this.token = data.userToken;
@@ -202,6 +201,53 @@ module.exports = function(config) {
     DeviceSubmitDataOption.prototype = new ConnectionOptions();
     DeviceSubmitDataOption.prototype.constructor = DeviceSubmitDataOption;
     module.DeviceSubmitDataOption = DeviceSubmitDataOption;
+
+
+    function GetDevicesTagsOption (data) {
+        this.pathname = common.buildPath(api.device.GET_TAGS, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetDevicesOption.prototype = new ConnectionOptions();
+    GetDevicesOption.prototype.constructor = GetDevicesTagsOption;
+    module.GetDevicesTagsOption = GetDevicesTagsOption;
+
+
+    function GetDevicesAttrOption (data) {
+        this.pathname = common.buildPath(api.device.GET_ATTRIBUTES, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    GetDevicesOption.prototype = new ConnectionOptions();
+    GetDevicesOption.prototype.constructor = GetDevicesAttrOption;
+    module.GetDevicesAttrOption = GetDevicesAttrOption;
+
+
+    function CountsDevicesOption (data) {
+        this.pathname = common.buildPath(api.device.COUNTS_ADVANCED, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    CreateDeviceOption.prototype = new ConnectionOptions();
+    CreateDeviceOption.prototype.constructor = CountsDevicesOption;
+    module.CountsDevicesOption = CountsDevicesOption;
+
+    function SearchDevicesOption (data) {
+        this.pathname = common.buildPath(api.device.SEARCH_ADVANCED, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    CreateDeviceOption.prototype = new ConnectionOptions();
+    CreateDeviceOption.prototype.constructor = SearchDevicesOption;
+    module.SearchDevicesOption = SearchDevicesOption;
 
     return module;
 }

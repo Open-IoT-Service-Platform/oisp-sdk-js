@@ -27,6 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 module.exports = function(config) {
     var api = require('./api');
     var ConnectionOptions = require('./iot.connection.def')(config);
+    var common = require('../../lib/common');
 
     var module = {};
 
@@ -39,6 +40,38 @@ module.exports = function(config) {
     CatalogOption.prototype = new ConnectionOptions();
     CatalogOption.prototype.constructor = CatalogOption;
     module.CatalogOption = CatalogOption;
+
+    function CreateCatalogOption(data) {
+        this.pathname = api.cmpcatalog.CATALOG;
+        this.token = data.deviceToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    CatalogOption.prototype = new ConnectionOptions();
+    CatalogOption.prototype.constructor = CreateCatalogOption;
+    module.CreateCatalogOption = CreateCatalogOption;
+
+    function GetCatalogDetailOption(data) {
+        this.pathname =  common.buildPath(api.cmpcatalog.COMPONENT, data.componentId);
+        this.token = data.deviceToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+    }
+    CatalogOption.prototype = new ConnectionOptions();
+    CatalogOption.prototype.constructor = GetCatalogDetailOption;
+    module.GetCatalogDetailOption = GetCatalogDetailOption;
+
+    function UpdateCatalogOption(data) {
+        this.pathname = common.buildPath(api.cmpcatalog.COMPONENT, data.componentId);
+        this.token = data.deviceToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = JSON.stringify(data.body);
+    }
+    CatalogOption.prototype = new ConnectionOptions();
+    CatalogOption.prototype.constructor = UpdateCatalogOption;
+    module.UpdateCatalogOption = UpdateCatalogOption;
 
     return module;
 }

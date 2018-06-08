@@ -180,4 +180,144 @@ describe(fileToTest, function() {
             "The Authorization Header has not set");
         done();
     });
+
+    it('Shall Return the DevicesTagsOption for Request  >', function(done) {
+        var config = {
+            connector: {
+                rest: {
+                    proxy: {
+                        host: "myprox",
+                        port: 2222
+                    },
+                    protocol: "http",
+                    host: "myapi3",
+                    port: 1000
+                }
+            }
+        };
+        var data = {
+            accountId: 20022,
+            deviceToken: "Thisis Mytoken",
+            body: {
+                a: 1,
+                d: 2,
+                n: [2,3]
+            }
+        };
+
+        var toTest = require(fileToTest)(config);
+        var deTest = new toTest.GetDevicesTagsOption(data);
+        var urlD = url.parse(deTest.url);
+        assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
+        assert.equal(urlD.pathname, "/v1/api/accounts/20022/devices/tags", "path improper formed");
+        assert.equal(deTest.body, null);
+        assert.equal(deTest.method, "GET", "The verb is incorrect");
+        done();
+    });
+
+    it('Shall Return the DevicesAttrOption for Request  >', function(done) {
+        var config = {
+            connector: {
+                rest: {
+                    proxy: {
+                        host: "myprox",
+                        port: 2222
+                    },
+                    protocol: "http",
+                    host: "myapi3",
+                    port: 1000
+                }
+            }
+        };
+        var data = {
+            accountId: 20022,
+            deviceToken: "Thisis Mytoken",
+            body: {
+                a: 1,
+                d: 2,
+                n: [2,3]
+            }
+        };
+
+        var toTest = require(fileToTest)(config);
+        var deTest = new toTest.GetDevicesAttrOption(data);
+        var urlD = url.parse(deTest.url);
+        assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
+        assert.equal(urlD.pathname, "/v1/api/accounts/20022/devices/attributes", "path improper formed");
+        assert.equal(deTest.body, null);
+        assert.equal(deTest.method, "GET", "The verb is incorrect");
+        done();
+    });
+
+    it('Shall Return the CountsDevicesOption for Request  >', function(done) {
+        var config = {
+            connector: {
+                rest: {
+                    proxy: {
+                        host: "myprox",
+                        port: 2222
+                    },
+                    protocol: "http",
+                    host: "myapi3",
+                    port: 1000
+                }
+            }
+        };
+        var data = {
+            accountId: 20022,
+            deviceToken: "Thisis Mytoken",
+            body: {
+                a: 1,
+                d: 2,
+                n: [2,3]
+            }
+        };
+
+        var toTest = require(fileToTest)(config);
+        var deTest = new toTest.CountsDevicesOption(data);
+        var urlD = url.parse(deTest.url);
+        assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
+        assert.equal(urlD.pathname, "/v1/api/accounts/20022/devices/count", "path improper formed");
+        assert.equal(deTest.body, JSON.stringify(data.body));
+        assert.equal(deTest.method, "POST", "The verb is incorrect");
+        done();
+    });
+
+    it('Shall Return the SearchDevicesOption for Request  >', function(done) {
+        var config = {
+            connector: {
+                rest: {
+                    proxy: {
+                        host: "myprox",
+                        port: 2222
+                    },
+                    protocol: "http",
+                    host: "myapi3",
+                    port: 1000
+                }
+            }
+        };
+        var data = {
+            accountId: 20022,
+            deviceToken: "Thisis Mytoken",
+            body: {
+                a: 1,
+                d: 2,
+                n: [2,3]
+            }
+        };
+
+        var toTest = require(fileToTest)(config);
+        var deTest = new toTest.SearchDevicesOption(data);
+        var urlD = url.parse(deTest.url);
+        assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
+        assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
+        assert.equal(urlD.pathname, "/v1/api/accounts/20022/devices/search", "path improper formed");
+        assert.equal(deTest.body, JSON.stringify(data.body));
+        assert.equal(deTest.method, "POST", "The verb is incorrect");
+        done();
+    });
 });
