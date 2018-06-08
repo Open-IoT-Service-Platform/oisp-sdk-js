@@ -29,10 +29,28 @@ module.exports = function(config) {
     
     module.httpClient = require('../../lib/httpClient');
     module.CatalogDef = require('./cmpcatalog.def')(config);
-
+    /*
+     * The following methods should be executed only with device-token not with user/admin token 
+     *
+     */
     module.getCatalog = function (data, callback) {
         var catalog = new module.CatalogDef.CatalogOption(data);
         return module.httpClient.httpRequest(catalog, callback);
+    };
+
+    module.createCatalog = function (data, callback) {
+        var createCatalogOpt = new module.CatalogDef.CreateCatalogOption(data);
+        return module.httpClient.httpRequest(createCatalogOpt, callback);
+    };
+
+    module.getCatalogDetail = function (data, callback) {
+        var getCatalogDetailOpt = new module.CatalogDef.GetCatalogDetailOption(data);
+        return module.httpClient.httpRequest(getCatalogDetailOpt, callback);
+    };
+
+    module.updateCatalog = function (data, callback) {
+        var updateCatalogOpt = new module.CatalogDef.UpdateCatalogOption(data);
+        return module.httpClient.httpRequest(updateCatalogOpt, callback);
     };
     
     return module;
