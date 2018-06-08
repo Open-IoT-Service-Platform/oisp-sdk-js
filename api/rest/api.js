@@ -83,7 +83,11 @@ module.exports.device = {
     UPDATE:                 '/v1/api/devices/{deviceid}',
     COMPONENTS:             '/v1/api/devices/{deviceid}/components',
     COMPONENTS_FULL:        '/v1/api/accounts/{accountid}/devices/{deviceid}/components',
-    COMPONENTS_DELETE:      '/v1/api/accounts/{accountid}/devices/{deviceid}/components/{cid}'
+    COMPONENTS_DELETE:      '/v1/api/accounts/{accountid}/devices/{deviceid}/components/{cid}',
+    GET_TAGS:               '/v1/api/accounts/{accountid}/devices/tags',
+    GET_ATTRIBUTES:         '/v1/api/accounts/{accountid}/devices/attributes',
+    COUNTS_ADVANCED:        '/v1/api/accounts/{accountId}/devices/count',
+    SEARCH_ADVANCED:        '/v1/api/accounts/{accountId}/devices/search'
 }
 
 module.exports.rules = {
