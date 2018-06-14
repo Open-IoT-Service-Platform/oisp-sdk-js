@@ -137,7 +137,7 @@ module.exports = function(config) {
      *  @param data.accouontId the id of the account
      */
     module.getDeviceTags = function(data, callback) {
-        var getDeviceTagsOpt = new module.adminDef.devices.getDeviceTagsOpt(data);
+        var getDeviceTagsOpt = new module.adminDef.devices.GetDevicesTagsOption(data);
         return module.httpClient.httpRequest(getDeviceTagsOpt, callback);
     }
 

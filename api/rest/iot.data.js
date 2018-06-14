@@ -37,7 +37,7 @@ module.exports = function(config) {
      *  @param data.deviceId id of the device which sends the data
      */
     module.submitData = function(data, callback) {
-        var submitDataOpt = new module.userAdminDef.data.SendDataOption(data);
+        var submitDataOpt = new module.userAdminDef.data.SubmitDataOption(data);
         return module.httpClient.httpRequest(submitDataOpt, callback);
     };
 
