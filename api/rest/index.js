@@ -37,6 +37,7 @@ module.exports = function(config) {
     module.control =    require('./iot.control')(config);
     module.rules =      require('./iot.rules')(config);
     module.alerts =     require('./iot.alerts')(config);
+    module.invitation = require('./iot.invitation')(config);
     
     return module;
 };
