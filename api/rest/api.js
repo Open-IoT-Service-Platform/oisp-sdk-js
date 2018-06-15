@@ -115,3 +115,10 @@ module.exports.user = {
     REQUEST_ACTIVATION:     '/v1/api/users/request_user_activation'
 }
 
+module.exports.invitation = {
+    GET_ALL:                '/v1/api/accounts/{accountId}/invites',
+    CREATE:                 '/v1/api/accounts/{accountId}/invites',
+    GET:                    '/v1/api/accounts/{accountId}/invites/{email}',
+    DELETE:                 '/v1/api/accounts/{accountId}/invites/{email}',
+    ACCEPT:                 '/v1/api/accounts/{accountId}/invites/{email}/{inviteId}/status'
+}

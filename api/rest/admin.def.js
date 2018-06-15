@@ -35,6 +35,7 @@ module.exports = function(config) {
     module.rules = require('./rules.def')(config);
     module.control = require('./control.def')(config);
     module.alerts = require('./alerts.def')(config);
+    module.invitation = require('./invitation.def')(config);
     
     return module;
 }
