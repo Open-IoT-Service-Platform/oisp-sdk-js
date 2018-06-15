@@ -223,7 +223,7 @@ describe(fileToTest, function() {
             ar : ["222", "223"]
         };
 
-        Option.getDeviceTagsOpt = function (device) {
+        Option.GetDevicesTagsOption = function (device) {
             assert.deepEqual(device, data, "The Data is not the expected");
             return optData;
         };
