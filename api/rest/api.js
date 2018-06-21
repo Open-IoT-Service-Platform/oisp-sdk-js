@@ -55,8 +55,12 @@ module.exports.auth = {
 }
 
 module.exports.cmpcatalog = {
-    CATALOG:                'v1/api/cmpcatalog',
-    COMPONENT:              '/v1/api/cmpcatalog/{componentId}'
+    GET_CATALOG:            'v1/api/cmpcatalog',
+    GET_CATALOG_FULL:       'v1/api/accounts/{accountId}/cmpcatalog',
+    CREATE_CATALOG_FULL:    'v1/api/accounts/{accountId}/cmpcatalog',
+    GET_COMPONENT:          '/v1/api/cmpcatalog/{componentId}',
+    GET_COMPONENT_FULL:     '/v1/api/accounts/{accountId}/cmpcatalog/{componentId}',
+    UPDATE_COMPONENT_FULL:  '/v1/api/accounts/{accountId}/cmpcatalog/{componentId}'
 }
 
 module.exports.control = {

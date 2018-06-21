@@ -34,7 +34,12 @@ module.exports = function(config) {
      *
      */
     module.getCatalog = function (data, callback) {
-        var catalog = new module.CatalogDef.CatalogOption(data);
+        var catalog = new module.CatalogDef.GetCatalogOption(data);
+        return module.httpClient.httpRequest(catalog, callback);
+    };
+
+    module.getCatalogWithFullPath = function (data, callback) {
+        var catalog = new module.CatalogDef.CatalogFullOption(data);
         return module.httpClient.httpRequest(catalog, callback);
     };
 
@@ -45,6 +50,11 @@ module.exports = function(config) {
 
     module.getCatalogDetail = function (data, callback) {
         var getCatalogDetailOpt = new module.CatalogDef.GetCatalogDetailOption(data);
+        return module.httpClient.httpRequest(getCatalogDetailOpt, callback);
+    };
+
+    module.getCatalogDetailWithFullPath = function (data, callback) {
+        var getCatalogDetailOpt = new module.CatalogDef.GetCatalogDetailFullOption(data);
         return module.httpClient.httpRequest(getCatalogDetailOpt, callback);
     };
 
