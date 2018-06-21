@@ -47,10 +47,14 @@ describe(fileToTest, function() {
     };
 
     var Option = {
-        DeviceActivateOption:{},
-        DeviceMetadataOption: {},
-        DeviceComponentOption: {}
+        GetCatalogOption: {},
+        CatalogFullOption: {},
+        CreateCatalogOption: {},
+        GetCatalogDetailOption: {},
+        GetCatalogDetailFullOption: {},
+        UpdateCatalogOption: {}
     };
+
     var httpClientMock = {
         httpRequest : {},
         httpClient: {}
@@ -77,7 +81,7 @@ describe(fileToTest, function() {
             ar : ["222", "223"]
         };
 
-        Option.CatalogOption = function (catalog) {
+        Option.GetCatalogOption = function (catalog) {
             assert.deepEqual(catalog, data, "The Data is not oki");
             return optData;
         };
@@ -93,6 +97,41 @@ describe(fileToTest, function() {
         toTest.httpClient = httpClientMock;
         toTest.CatalogDef = Option;
         toTest.getCatalog(data, callBack);
+    });
+
+    it('Shall get list component types for an account with full path >', function(done) {
+
+        var optData = {
+            method: 'GET',
+            host: "myhost",
+            body: "mybody"
+        };
+
+        var data = {
+            body: { data: "message" }
+        };
+        var reData = {
+            x : 10,
+            y : 220,
+            ar : ["222", "223"]
+        };
+
+        Option.CatalogFullOption = function (catalog) {
+            assert.deepEqual(catalog, data, "The Data is not oki");
+            return optData;
+        };
+        httpClientMock.httpRequest = function (opt, cb) {
+            assert.deepEqual(opt, optData, "the option object were missed");
+            cb(reData);
+        };
+        var callBack = function (response) {
+            assert.isNotNull(response, "The Response were missing");
+            assert.deepEqual(response, reData, "The Data were missing");
+            done();
+        };
+        toTest.httpClient = httpClientMock;
+        toTest.CatalogDef = Option;
+        toTest.getCatalogWithFullPath(data, callBack);
     });
 
     it('Shall create a new component type and control the Response from device Registration >', function(done) {
@@ -165,11 +204,46 @@ describe(fileToTest, function() {
         toTest.getCatalogDetail(data, callBack);
     });
 
+    it('Shall get component detail with full path >', function(done) {
+
+        var optData = {
+            method: 'GET',
+            host: "myhost",
+            body: "mybody"
+        };
+
+        var data = {
+            body: { data: "message" }
+        };
+        var reData = {
+            x : 10,
+            y : 220,
+            ar : ["222", "223"]
+        };
+
+        Option.GetCatalogDetailFullOption = function (catalog) {
+            assert.deepEqual(catalog, data, "The Data is not oki");
+            return optData;
+        };
+        httpClientMock.httpRequest = function (opt, cb) {
+            assert.deepEqual(opt, optData, "the option object were missed");
+            cb(reData);
+        };
+        var callBack = function (response) {
+            assert.isNotNull(response, "The Response were missing");
+            assert.deepEqual(response, reData, "The Data were missing");
+            done();
+        };
+        toTest.httpClient = httpClientMock;
+        toTest.CatalogDef = Option;
+        toTest.getCatalogDetailWithFullPath(data, callBack);
+    });
+
 
     it('Shall update component type>', function(done) {
 
         var optData = {
-            method: 'POST',
+            method: 'PUT',
             host: "myhost",
             body: "mybody"
         };
