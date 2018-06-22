@@ -138,7 +138,7 @@ describe(fileToTest, function() {
         var urlD = url.parse(deTest.url);
         assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
-        assert.equal(urlD.pathname, "/v1/api/accounts/20000/invites/test@intel.com", "path improper formed");
+        assert.equal(urlD.pathname, "/v1/api/invites/test@intel.com", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "GET", "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
@@ -199,7 +199,6 @@ describe(fileToTest, function() {
         };
         var data = {
             accountId: 20000,
-            email: "test@intel.com",
             inviteId: "iid",
             userToken: "This is Mytoken",
             body: {
@@ -214,7 +213,7 @@ describe(fileToTest, function() {
         var urlD = url.parse(deTest.url);
         assert.equal(urlD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urlD.port, config.connector.rest.port, "the port were missing");
-        assert.equal(urlD.pathname, "/v1/api/accounts/20000/invites/test@intel.com/iid/status", "path improper formed");
+        assert.equal(urlD.pathname, "/v1/api/invites/iid/status", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
         assert.equal(deTest.method, "PUT", "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
