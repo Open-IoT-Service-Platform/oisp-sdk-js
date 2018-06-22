@@ -122,7 +122,7 @@ module.exports.user = {
 module.exports.invitation = {
     GET_ALL:                '/v1/api/accounts/{accountId}/invites',
     CREATE:                 '/v1/api/accounts/{accountId}/invites',
-    GET:                    '/v1/api/accounts/{accountId}/invites/{email}',
+    GET:                    '/v1/api/invites/{email}',
     DELETE:                 '/v1/api/accounts/{accountId}/invites/{email}',
-    ACCEPT:                 '/v1/api/accounts/{accountId}/invites/{email}/{inviteId}/status'
+    ACCEPT:                 '/v1/api/invites/{inviteId}/status'
 }

@@ -53,7 +53,7 @@ module.exports = function(config) {
     module.CreateInvitationOption = CreateInvitationOption;
 
     function GetInvitationsOption(data) {
-        this.pathname = common.buildPath(api.invitation.GET, [data.accountId, data.email]);
+        this.pathname = common.buildPath(api.invitation.GET, [data.email]);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
@@ -73,7 +73,7 @@ module.exports = function(config) {
     module.DeleteInvitationsOption = DeleteInvitationsOption;
 
     function AcceptInvitationOption(data) {
-        this.pathname = common.buildPath(api.invitation.ACCEPT, [data.accountId, data.email, data.inviteId]);
+        this.pathname = common.buildPath(api.invitation.ACCEPT, data.inviteId);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'PUT';
