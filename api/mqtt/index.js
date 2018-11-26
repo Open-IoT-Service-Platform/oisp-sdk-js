@@ -23,12 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-module.exports = function(config) {
-    var module = {};
-    
-    module.rest = require('./rest')(config);
-    module.ws =   require('./ws');
-    module.mqtt = require('./mqtt');
-    
-    return module;
+module.exports = {
+    connector: require('./connector')
 };
