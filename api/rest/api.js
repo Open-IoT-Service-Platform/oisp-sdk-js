@@ -55,8 +55,12 @@ module.exports.auth = {
 }
 
 module.exports.cmpcatalog = {
-    CATALOG:                'v1/api/cmpcatalog',
-    COMPONENT:              '/v1/api/cmpcatalog/{componentId}'
+    GET_CATALOG:            'v1/api/cmpcatalog',
+    GET_CATALOG_FULL:       'v1/api/accounts/{accountId}/cmpcatalog',
+    CREATE_CATALOG_FULL:    'v1/api/accounts/{accountId}/cmpcatalog',
+    GET_COMPONENT:          '/v1/api/cmpcatalog/{componentId}',
+    GET_COMPONENT_FULL:     '/v1/api/accounts/{accountId}/cmpcatalog/{componentId}',
+    UPDATE_COMPONENT_FULL:  '/v1/api/accounts/{accountId}/cmpcatalog/{componentId}'
 }
 
 module.exports.control = {
@@ -83,7 +87,11 @@ module.exports.device = {
     UPDATE:                 '/v1/api/devices/{deviceid}',
     COMPONENTS:             '/v1/api/devices/{deviceid}/components',
     COMPONENTS_FULL:        '/v1/api/accounts/{accountid}/devices/{deviceid}/components',
-    COMPONENTS_DELETE:      '/v1/api/accounts/{accountid}/devices/{deviceid}/components/{cid}'
+    COMPONENTS_DELETE:      '/v1/api/accounts/{accountid}/devices/{deviceid}/components/{cid}',
+    GET_TAGS:               '/v1/api/accounts/{accountid}/devices/tags',
+    GET_ATTRIBUTES:         '/v1/api/accounts/{accountid}/devices/attributes',
+    COUNTS_ADVANCED:        '/v1/api/accounts/{accountId}/devices/count',
+    SEARCH_ADVANCED:        '/v1/api/accounts/{accountId}/devices/search'
 }
 
 module.exports.rules = {
@@ -111,3 +119,10 @@ module.exports.user = {
     REQUEST_ACTIVATION:     '/v1/api/users/request_user_activation'
 }
 
+module.exports.invitation = {
+    GET_ALL:                '/v1/api/accounts/{accountId}/invites',
+    CREATE:                 '/v1/api/accounts/{accountId}/invites',
+    GET:                    '/v1/api/invites/{email}',
+    DELETE:                 '/v1/api/accounts/{accountId}/invites/{email}',
+    ACCEPT:                 '/v1/api/invites/{inviteId}/status'
+}

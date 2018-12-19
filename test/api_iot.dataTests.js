@@ -75,7 +75,7 @@ describe(fileToTest, function() {
             ar : ["222", "333"]
         };
 
-        Option.SendDataOption = function(alerts) {
+        Option.SubmitDataOption = function(alerts) {
             assert.deepEqual(alerts, data, "The data is not oki");
             return optData;
         }
