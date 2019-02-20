@@ -32,7 +32,7 @@ module.exports = function(config) {
      * Top of the hierarchy. Common attributes to every
      * Connection Options
      */
-    function ConnectionOptions() {
+    function ConnectionOptions(isBinary) {
         if (apiconf.proxy && apiconf.proxy.host) {
             if(apiconf.proxy.host.indexOf('://') < 0) {
                 apiconf.proxy.host = 'http://' + apiconf.proxy.host;
@@ -48,15 +48,20 @@ module.exports = function(config) {
             port: apiconf.port,
             pathname: this.pathname,
             protocol: apiconf.protocol,
-            query: this.query
+            query: this.query,
+            encoding: null
         };
         if (apiconf.strictSSL === false) {
             this.strictSSL = false;
         }
+        var contentType = "application/json";
+        if ( isBinary == true ) {
+            contentType = "application/cbor";
+        }
         this.timeout = apiconf.timeout;
         this.url = url.format(urlT);
         this.headers = {
-            "Content-type" : "application/json"
+            "Content-type" : contentType
         };
         if (this.token) {
             this.headers["Authorization"] = "Bearer " + this.token;

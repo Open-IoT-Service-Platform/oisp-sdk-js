@@ -24,6 +24,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
+var cbor = require('cbor');
+
 module.exports = function(config) {
     var common = require('../../lib/common');
     var api = require('./api');
@@ -32,11 +34,17 @@ module.exports = function(config) {
     var module = {};
 
     function SubmitDataOption(data) {
+        var isBinary = common.isBinary(data.body);
         this.pathname = common.buildPath(api.data.SEND, data.deviceId);
         this.token = data.userToken;
-        ConnectionOptions.call(this);
+        ConnectionOptions.call(this, isBinary);
         this.method = 'POST';
-        this.body =  JSON.stringify(data.body);
+        if ( isBinary ) {
+            this.body = cbor.encode(data.body);
+        }
+        else {
+            this.body =  JSON.stringify(data.body);
+        }
     }
     SubmitDataOption.prototype = new ConnectionOptions();
     SubmitDataOption.prototype.constructor = SubmitDataOption;

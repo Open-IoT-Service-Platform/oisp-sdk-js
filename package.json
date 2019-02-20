@@ -1,29 +1,55 @@
 {
-  "name": "@open-iot-service-platform/oisp-sdk-js",
-  "version": "1.0.0beta2",
-  "description": "OISP SDK for Node.js",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_from": "git+https://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git#fdd16923d2d244027638f0b42909d8c29c5444f6",
+  "_id": "@open-iot-service-platform/oisp-sdk-js@1.0.0-beta1",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/@open-iot-service-platform/oisp-sdk-js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "@open-iot-service-platform/oisp-sdk-js@git+https://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git#fdd16923d2d244027638f0b42909d8c29c5444f6",
+    "name": "@open-iot-service-platform/oisp-sdk-js",
+    "escapedName": "@open-iot-service-platform%2foisp-sdk-js",
+    "scope": "@open-iot-service-platform",
+    "rawSpec": "git+https://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git#fdd16923d2d244027638f0b42909d8c29c5444f6",
+    "saveSpec": "git+https://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git#fdd16923d2d244027638f0b42909d8c29c5444f6",
+    "fetchSpec": "https://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git",
+    "gitCommittish": "fdd16923d2d244027638f0b42909d8c29c5444f6"
   },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git+https://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git#fdd16923d2d244027638f0b42909d8c29c5444f6",
+  "_spec": "@open-iot-service-platform/oisp-sdk-js@git+https://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git#fdd16923d2d244027638f0b42909d8c29c5444f6",
+  "_where": "/opt/oisp/tests",
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "grunt": "^1.0.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-compress": "^1.4.3",
-    "gruntify-eslint": "^4.0.0",
-    "grunt-license-finder": "^2.0.0",
-    "grunt-mocha-istanbul": "^5.0.2",
-    "istanbul": "^0.4.5",
-    "mocha": "^4.0.1",
-    "rewire": "^2.5.2"
-  },
+  "bundleDependencies": false,
   "dependencies": {
     "async": "^2.5.0",
     "request": "^2.83.0",
     "tunnel": "0.0.5",
     "websocket": "^1.0.24"
-  }
+  },
+  "deprecated": false,
+  "description": "OISP SDK for Node.js",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-compress": "^1.4.3",
+    "grunt-license-finder": "^2.0.0",
+    "grunt-mocha-istanbul": "^5.0.2",
+    "gruntify-eslint": "^4.0.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^4.0.1",
+    "rewire": "^2.5.2",
+    "cbor": "^4.1.5"
+  },
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@open-iot-service-platform/oisp-sdk-js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0-beta1"
 }

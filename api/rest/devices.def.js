@@ -24,6 +24,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
+var cbor = require('cbor');
+
 module.exports = function(config) {
     var common = require('../../lib/common');
     var api = require('./api');
@@ -185,18 +187,28 @@ module.exports = function(config) {
      * @constructor
      */
     function DeviceSubmitDataOption (data) {
+        var isBinary = common.isBinary(data.body);
         this.pathname = common.buildPath(api.submit.DATA, data.deviceId);
-        ConnectionOptions.call(this);
+        ConnectionOptions.call(this,isBinary);
+        var contentType = "application/json";
+        if ( isBinary == true ) {
+            contentType = "application/cbor";
+        }
         this.method = 'POST';
         this.headers = {
-            "Content-type" : "application/json",
+            "Content-type" : contentType,
             "Authorization" : "Bearer " + data.deviceToken
         };
         if (data.forwarded) {
             this.headers["forwarded"] = true;
             delete data.forwarded;
         }
-        this.body = JSON.stringify(data.body);
+        if ( isBinary ) {
+            this.body = cbor.encode(data.body);
+        }
+        else {
+            this.body =  JSON.stringify(data.body);
+        }
     }
     DeviceSubmitDataOption.prototype = new ConnectionOptions();
     DeviceSubmitDataOption.prototype.constructor = DeviceSubmitDataOption;
