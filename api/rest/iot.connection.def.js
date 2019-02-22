@@ -48,8 +48,7 @@ module.exports = function(config) {
             port: apiconf.port,
             pathname: this.pathname,
             protocol: apiconf.protocol,
-            query: this.query,
-            encoding: null
+            query: this.query
         };
         if (apiconf.strictSSL === false) {
             this.strictSSL = false;
