@@ -18,7 +18,8 @@
     "grunt-mocha-istanbul": "^5.0.2",
     "istanbul": "^0.4.5",
     "mocha": "^4.0.1",
-    "rewire": "^2.5.2"
+    "rewire": "^2.5.2",
+    "cbor": "^4.1.5"
   },
   "dependencies": {
     "async": "^2.5.0",
