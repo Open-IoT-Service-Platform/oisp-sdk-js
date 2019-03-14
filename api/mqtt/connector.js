@@ -17,7 +17,7 @@
 "use strict";
 var mqtt = require('mqtt');
 var events = require('events');
-var errBuilder = require('../errorHandler/errorHandler').errBuilder;
+var errBuilder = require('../../lib/errorHandler/errorHandler').errBuilder;
 var fs = require('fs')
 function Broker(conf, logger) {
     var me = this;
