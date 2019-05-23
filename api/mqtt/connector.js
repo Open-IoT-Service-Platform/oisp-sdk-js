@@ -123,7 +123,6 @@ function Broker(conf) {
                     me.client = mqtt.connect('mqtts://' + me.host + ":" + me.port, {
                         username: me.crd.username,
                         password: me.crd.password,
-                        ca : fs.readFileSync(conf.ca),
                         rejectUnauthorized: false
                     });
                 }
