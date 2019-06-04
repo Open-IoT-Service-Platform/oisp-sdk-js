@@ -70,6 +70,7 @@ module.exports = function(config) {
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'POST';
+        this.encoding = null;
         this.body =  JSON.stringify(data.body);
     }
     SearchDataAdvancedOption.prototype = new ConnectionOptions();
