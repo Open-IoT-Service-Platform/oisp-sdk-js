@@ -17,7 +17,6 @@
 "use strict";
 var mqtt = require('mqtt');
 var events = require('events');
-var fs = require('fs')
 var common = require('../../lib/common');
 
 function Broker(conf) {
