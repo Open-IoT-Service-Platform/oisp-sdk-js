@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.2",
     "borc": "^2.1.0",
-    "request": "^2.83.0",
+    "request": "^2.88.0",
     "tunnel": "0.0.5",
     "mqtt" : "^2.13.1",
     "websocket": "^1.0.24"
