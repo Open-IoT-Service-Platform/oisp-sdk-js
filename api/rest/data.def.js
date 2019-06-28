@@ -24,7 +24,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var cbor = require('cbor');
+var cbor = require('borc');
 
 module.exports = function(config) {
     var common = require('../../lib/common');
@@ -70,6 +70,7 @@ module.exports = function(config) {
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'POST';
+        this.encoding = null;
         this.body =  JSON.stringify(data.body);
     }
     SearchDataAdvancedOption.prototype = new ConnectionOptions();

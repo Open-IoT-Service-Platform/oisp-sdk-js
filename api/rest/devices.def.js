@@ -24,7 +24,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 "use strict";
 
-var cbor = require('cbor');
+var cbor = require('borc');
 
 module.exports = function(config) {
     var common = require('../../lib/common');

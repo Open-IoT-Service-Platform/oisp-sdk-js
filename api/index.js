@@ -28,6 +28,7 @@ module.exports = function(config) {
     
     module.rest = require('./rest')(config);
     module.ws =   require('./ws');
+    module.mqtt = require('./mqtt');
     
     return module;
 };

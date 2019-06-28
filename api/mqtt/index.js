@@ -23,14 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 "use strict";
-
-module.exports = function(config) {
-    var module = {};
-    
-    module.common     = require('./common.js');
-    module.httpClient = require('./httpClient');
-    module.proxies    = require('./proxies')(config);
-    module.data       = require('./data');
-    
-    return module;
-}
+module.exports = {
+    connector: require('./connector')
+};
