@@ -29,17 +29,14 @@ module.exports = function(config) {
     
     module.httpClient = require('../../lib/httpClient');
     module.CatalogDef = require('./cmpcatalog.def')(config);
-    /*
-     * The following methods should be executed only with device-token not with user/admin token 
-     *
-     */
-    module.getCatalog = function (data, callback) {
-        var catalog = new module.CatalogDef.GetCatalogOption(data);
+
+    module.getDeviceCatalog = function (data, callback) {
+        var catalog = new module.CatalogDef.DeviceCatalogOption(data);
         return module.httpClient.httpRequest(catalog, callback);
     };
 
-    module.getCatalogWithFullPath = function (data, callback) {
-        var catalog = new module.CatalogDef.CatalogFullOption(data);
+    module.getCatalog = function (data, callback) {
+        var catalog = new module.CatalogDef.CatalogOption(data);
         return module.httpClient.httpRequest(catalog, callback);
     };
 
@@ -48,13 +45,13 @@ module.exports = function(config) {
         return module.httpClient.httpRequest(createCatalogOpt, callback);
     };
 
-    module.getCatalogDetail = function (data, callback) {
-        var getCatalogDetailOpt = new module.CatalogDef.GetCatalogDetailOption(data);
-        return module.httpClient.httpRequest(getCatalogDetailOpt, callback);
+    module.getDeviceCatalogDetail = function (data, callback) {
+        var getDeviceCatalogDetailOpt = new module.CatalogDef.DeviceCatalogDetailOption(data);
+        return module.httpClient.httpRequest(getDeviceCatalogDetailOpt, callback);
     };
 
-    module.getCatalogDetailWithFullPath = function (data, callback) {
-        var getCatalogDetailOpt = new module.CatalogDef.GetCatalogDetailFullOption(data);
+    module.getCatalogDetail = function (data, callback) {
+        var getCatalogDetailOpt = new module.CatalogDef.CatalogDetailOption(data);
         return module.httpClient.httpRequest(getCatalogDetailOpt, callback);
     };
 

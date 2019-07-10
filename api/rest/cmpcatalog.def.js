@@ -31,25 +31,25 @@ module.exports = function(config) {
 
     var module = {};
 
-    function GetCatalogOption(data) {
+    function DeviceCatalogOption(data) {
         this.pathname = api.cmpcatalog.GET_CATALOG;
-        this.token = data.userToken;
+        this.token = data.deviceToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
     }
-    GetCatalogOption.prototype = new ConnectionOptions();
-    GetCatalogOption.prototype.constructor = GetCatalogOption;
-    module.GetCatalogOption = GetCatalogOption;
+    DeviceCatalogOption.prototype = new ConnectionOptions();
+    DeviceCatalogOption.prototype.constructor = DeviceCatalogOption;
+    module.DeviceCatalogOption = DeviceCatalogOption;
 
-    function CatalogFullOption(data) {
+    function CatalogOption(data) {
         this.pathname = common.buildPath(api.cmpcatalog.GET_CATALOG_FULL, data.accountId);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
     }
-    CatalogFullOption.prototype = new ConnectionOptions();
-    CatalogFullOption.prototype.constructor = CatalogFullOption;
-    module.CatalogFullOption = CatalogFullOption;
+    CatalogOption.prototype = new ConnectionOptions();
+    CatalogOption.prototype.constructor = CatalogOption;
+    module.CatalogOption = CatalogOption;
 
     function CreateCatalogOption(data) {
         this.pathname = common.buildPath(api.cmpcatalog.CREATE_CATALOG_FULL, data.accountId);
@@ -62,25 +62,25 @@ module.exports = function(config) {
     CreateCatalogOption.prototype.constructor = CreateCatalogOption;
     module.CreateCatalogOption = CreateCatalogOption;
 
-    function GetCatalogDetailOption(data) {
+    function DeviceCatalogDetailOption(data) {
         this.pathname =  common.buildPath(api.cmpcatalog.GET_COMPONENT, data.componentId);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
     }
-    GetCatalogDetailOption.prototype = new ConnectionOptions();
-    GetCatalogDetailOption.prototype.constructor = GetCatalogDetailOption;
-    module.GetCatalogDetailOption = GetCatalogDetailOption;
+    DeviceCatalogDetailOption.prototype = new ConnectionOptions();
+    DeviceCatalogDetailOption.prototype.constructor = DeviceCatalogDetailOption;
+    module.DeviceCatalogDetailOption = DeviceCatalogDetailOption;
 
-    function GetCatalogDetailFullOption(data) {
+    function CatalogDetailOption(data) {
         this.pathname =  common.buildPath(api.cmpcatalog.GET_COMPONENT_FULL, [data.accountId, data.componentId]);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
     }
-    GetCatalogDetailFullOption.prototype = new ConnectionOptions();
-    GetCatalogDetailFullOption.prototype.constructor = GetCatalogDetailFullOption;
-    module.GetCatalogDetailFullOption = GetCatalogDetailFullOption;
+    CatalogDetailOption.prototype = new ConnectionOptions();
+    CatalogDetailOption.prototype.constructor = CatalogDetailOption;
+    module.CatalogDetailOption = CatalogDetailOption;
 
     function UpdateCatalogOption(data) {
         this.pathname = common.buildPath(api.cmpcatalog.UPDATE_COMPONENT_FULL, [data.accountId, data.componentId]);
