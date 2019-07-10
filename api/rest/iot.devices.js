@@ -176,6 +176,16 @@ module.exports = function(config) {
         return module.httpClient.httpRequest(searchDevicesOpt, callback);
     }
 
+    /**
+     *  @description Get summary of active/inactive/created devices. API: GET: /v1/api/accounts/{accountId}/devices/totals
+     *  @param data.userToken contains the access token
+     *  @param data.accountId the id of the account
+     *  @param data.body contains the filters as described in API spec
+     */
+    module.getTotals = function(data, callback) {
+        var getTotalsOpt = new module.adminDef.devices.GetTotalsOption(data);
+        return module.httpClient.httpRequest(getTotalsOpt, callback);
+    }
 
     /*
      * The following methods should be executed only with device-token not with user/admin token 

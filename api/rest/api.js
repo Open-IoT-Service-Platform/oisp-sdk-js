@@ -91,7 +91,8 @@ module.exports.device = {
     GET_TAGS:               '/v1/api/accounts/{accountid}/devices/tags',
     GET_ATTRIBUTES:         '/v1/api/accounts/{accountid}/devices/attributes',
     COUNTS_ADVANCED:        '/v1/api/accounts/{accountId}/devices/count',
-    SEARCH_ADVANCED:        '/v1/api/accounts/{accountId}/devices/search'
+    SEARCH_ADVANCED:        '/v1/api/accounts/{accountId}/devices/search',
+    TOTALS:                 '/v1/api/accounts/{accountId}/devices/totals'
 }
 
 module.exports.rules = {
