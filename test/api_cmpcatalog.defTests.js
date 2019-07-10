@@ -30,7 +30,7 @@ describe(fileToTest, function() {
     function makeTokenBearer (token) {
         return "Bearer " + token;
     }
-    it('Shall Return the CatalogOption for Request  >', function(done) {
+    it('Shall Return the DeviceCatalogOption for Request  >', function(done) {
         var config = {
             connector: {
                 rest: {
@@ -51,7 +51,7 @@ describe(fileToTest, function() {
         };
 
         var toTest = require(fileToTest)(config);
-        var deTest = new toTest.GetCatalogOption(data);
+        var deTest = new toTest.DeviceCatalogOption(data);
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
@@ -60,12 +60,10 @@ describe(fileToTest, function() {
         assert.equal(deTest.method, "GET", "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
         assert.property(deTest.headers, "Content-type", "The content Type has not Set");
-        assert.property(deTest.headers, "Authorization", "The Authorization Header has not set");
-        assert.equal(deTest.headers["Authorization"], makeTokenBearer(data.userToken));
         done();
     });
 
-    it('Shall Return the CatalogOption with full path for Request  >', function(done) {
+    it('Shall Return the CatalogOption for Request  >', function(done) {
         var config = {
             connector: {
                 rest: {
@@ -87,7 +85,7 @@ describe(fileToTest, function() {
         };
 
         var toTest = require(fileToTest)(config);
-        var deTest = new toTest.CatalogFullOption(data);
+        var deTest = new toTest.CatalogOption(data);
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
@@ -138,7 +136,7 @@ describe(fileToTest, function() {
         done();
     });
 
-    it('Shall Return the GetCatalogDetailOption for Request  >', function(done) {
+    it('Shall Return the DeviceCatalogDetailOption for Request  >', function(done) {
         var config = {
             connector: {
                 rest: {
@@ -160,7 +158,7 @@ describe(fileToTest, function() {
         };
 
         var toTest = require(fileToTest)(config);
-        var deTest = new toTest.GetCatalogDetailOption(data);
+        var deTest = new toTest.DeviceCatalogDetailOption(data);
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
@@ -169,12 +167,10 @@ describe(fileToTest, function() {
         assert.equal(deTest.method, "GET", "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
         assert.property(deTest.headers, "Content-type", "The content Type has not Set");
-        assert.property(deTest.headers, "Authorization", "The Authorization Header has not set");
-        assert.equal(deTest.headers["Authorization"], makeTokenBearer(data.userToken));
         done();
     });
 
-    it('Shall Return the GetCatalogDetailOption with full path for Request  >', function(done) {
+    it('Shall Return the CatalogDetailOption for Request  >', function(done) {
         var config = {
             connector: {
                 rest: {
@@ -197,7 +193,7 @@ describe(fileToTest, function() {
         };
 
         var toTest = require(fileToTest)(config);
-        var deTest = new toTest.GetCatalogDetailFullOption(data);
+        var deTest = new toTest.CatalogDetailOption(data);
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");

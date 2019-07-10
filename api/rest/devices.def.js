@@ -260,5 +260,16 @@ module.exports = function(config) {
     CreateDeviceOption.prototype.constructor = SearchDevicesOption;
     module.SearchDevicesOption = SearchDevicesOption;
 
+    function GetTotalsOption(data) {
+        this.pathname = common.buildPath(api.device.TOTALS, data.accountId);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'GET';
+        this.body = null;
+    }
+    CreateDeviceOption.prototype = new ConnectionOptions();
+    CreateDeviceOption.prototype.constructor = GetTotalsOption;
+    module.GetTotalsOption = GetTotalsOption;
+
     return module;
 }
