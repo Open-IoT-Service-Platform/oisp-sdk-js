@@ -24,7 +24,6 @@
 
 module.exports = function(grunt) {
     // Project configuration.
-    var buildID = grunt.option('buildID') || 'local';
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         dirs: {
@@ -36,24 +35,6 @@ module.exports = function(grunt) {
                       'lib/*.js',
                       '*.js'],
             testfiles: ['test/*.js']
-        },
-        license_finder: {
-            default_options: {
-                options: {
-                    production: false,
-                    directory: process.cwd(),
-                    csv: true,
-                    out: 'licenses.csv'
-                }
-            },
-            production : {
-                options: {
-                    production: true,
-                    directory: process.cwd(),
-                    csv: true,
-                    out: 'licenses_production.csv'
-                }
-            }
         },
         eslint: {
             local: {
@@ -67,20 +48,6 @@ module.exports = function(grunt) {
                 options: {
                     configFile: '<%= dirs.eslint %>/test-config.json'
                 }
-            }
-        },
-        compress: {
-            teamcity: {
-                options: {
-                    archive: 'dist/'+'<%= pkg.name %>_' + buildID + ".tgz",
-                    mode: 'tgz'
-                },
-                files: [{cwd: '.',
-                         expand: true,
-                         src: ['**/*.js', '**/*.sh', 'config.json', '!node_modules/**', '!dist/**', '!test/**', '!Gruntfile.js'],
-                         /* this is the root folder of untar file */
-                         dest: '<%= pkg.name %>/'
-                }]
             }
         },
         nyc: {
@@ -100,15 +67,11 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-simple-nyc');
-    grunt.loadNpmTasks('grunt-license-finder');
-
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('gruntify-eslint');
-    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-simple-nyc');
 
     // Default task(s).
     grunt.registerTask('default', ['eslint:local', 'eslint:tests', 'nyc:all']);
-    grunt.registerTask('packaging', ['compress:teamcity']);
 };
 
