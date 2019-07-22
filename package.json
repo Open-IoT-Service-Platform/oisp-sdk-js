@@ -4,7 +4,7 @@
   "description": "OISP SDK for Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt"
   },
   "author": "",
   "license": "ISC",
@@ -17,15 +17,14 @@
     "websocket": "^1.0.24"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "grunt": "^1.0.1",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-compress": "^1.4.3",
-    "gruntify-eslint": "^4.0.0",
+    "chai": "^4.2.0",
+    "grunt": "^1.0.4",
+    "grunt-cli": "^1.3.2",
+    "grunt-contrib-compress": "^1.5.0",
+    "grunt-simple-nyc": "^3.0.0",
+    "gruntify-eslint": "^5.0.0",
     "grunt-license-finder": "^2.0.0",
-    "grunt-mocha-istanbul": "^5.0.2",
-    "istanbul": "^0.4.5",
-    "mocha": "^4.0.1",
-    "rewire": "^2.5.2"
+    "mocha": "^6.2.0",
+    "rewire": "^4.0.1"
   }
 }
