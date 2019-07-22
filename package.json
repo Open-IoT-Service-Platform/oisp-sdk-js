@@ -6,8 +6,21 @@
   "scripts": {
     "test": "grunt"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Open-IoT-Service-Platform/oisp-sdk-js.git"
+  },
+  "keywords": [
+    "oisp",
+    "sdk",
+    "js"
+  ],
+  "author": "Intel",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Open-IoT-Service-Platform/oisp-sdk-js/issues"
+  },
+  "homepage": "https://github.com/Open-IoT-Service-Platform/oisp-sdk-js",
   "dependencies": {
     "async": "^2.6.2",
     "borc": "^2.1.0",
