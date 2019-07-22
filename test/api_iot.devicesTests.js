@@ -157,7 +157,6 @@ describe(fileToTest, function() {
         };
 
         var callBack = function (error, response) {
-            console.log("Marcel: error", error);
             assert.isNull(error, "An expected Error is detected");
             assert.isArray(response, "The Response were missing");
             assert.deepEqual(response[0], reData, "The Data were missing");
