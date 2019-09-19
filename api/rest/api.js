@@ -51,7 +51,9 @@ module.exports.alerts = {
 module.exports.auth = {
     TOKEN:                  '/v1/api/auth/token',
     TOKEN_INFO:             '/v1/api/auth/tokenInfo',
-    USER_INFO:              '/v1/api/auth/me'
+    USER_INFO:              '/v1/api/auth/me',
+    REFRESH_TOKEN:          '/v1/api/auth/refresh',
+    REVOKE_REFRESH_TOKEN:   '/v1/api/auth/refresh/revoke'
 }
 
 module.exports.cmpcatalog = {
