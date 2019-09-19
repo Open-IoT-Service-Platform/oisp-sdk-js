@@ -66,5 +66,38 @@ module.exports = function(config) {
     GetAuthUserInfoOption.prototype.constructor = GetAuthUserInfoOption;
     module.GetAuthUserInfoOption = GetAuthUserInfoOption;
 
+    function GetRefreshTokenOption(data) {
+        this.pathname = common.buildPath(api.auth.REFRESH_TOKEN);
+        this.token = data.token;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        this.body = null;
+    }
+    GetRefreshTokenOption.prototype = new ConnectionOptions();
+    GetRefreshTokenOption.prototype.constructor = GetRefreshTokenOption;
+    module.GetRefreshTokenOption = GetRefreshTokenOption;
+
+    function RefreshAuthTokenOption(data) {
+        this.pathname = common.buildPath(api.auth.REFRESH_TOKEN);
+        this.token = data.token;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    RefreshAuthTokenOption.prototype = new ConnectionOptions();
+    RefreshAuthTokenOption.prototype.constructor = RefreshAuthTokenOption;
+    module.RefreshAuthTokenOption = RefreshAuthTokenOption;
+
+    function RevokeRefreshTokenOption(data) {
+        this.pathname = common.buildPath(api.auth.REVOKE_REFRESH_TOKEN);
+        this.token = data.token;
+        ConnectionOptions.call(this);
+        this.method = 'DELETE';
+        this.body = JSON.stringify(data.body);
+    }
+    RevokeRefreshTokenOption.prototype = new ConnectionOptions();
+    RevokeRefreshTokenOption.prototype.constructor = RevokeRefreshTokenOption;
+    module.RevokeRefreshTokenOption = RevokeRefreshTokenOption;
+
     return module;
 }
