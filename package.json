@@ -1,6 +1,6 @@
 {
   "name": "@open-iot-service-platform/oisp-sdk-js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "OISP SDK for Node.js",
   "main": "index.js",
   "scripts": {
