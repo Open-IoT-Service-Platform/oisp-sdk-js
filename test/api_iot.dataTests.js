@@ -44,7 +44,8 @@ describe(fileToTest, function() {
     };
 
     var Option = {
-        SendDataOption: {},
+        SubmitDataOption: {},
+        SubmitDataAsUserOption: {},
         SearchDataOption: {},
         SearchDataAdvancedOption: {}
     };
@@ -76,7 +77,7 @@ describe(fileToTest, function() {
         };
 
         Option.SubmitDataOption = function(alerts) {
-            assert.deepEqual(alerts, data, "The data is not oki");
+            assert.deepEqual(alerts, data, "The data is not ok");
             return optData;
         }
         httpClientMock.httpRequest = function (opt, cb) {
@@ -92,6 +93,47 @@ describe(fileToTest, function() {
         toTest.userAdminDef.data = Option;
         toTest.submitData(data, callBack);
     });
+
+    it('Shall send submit data request as user for data submission', function(done) {
+        var optData = {
+            method: 'POST',
+            host: "myhost",
+            body: "mybody"
+        };
+
+        var data = {
+            accountid: "aid",
+            deviceid: "did",
+            body: {data: "message"}
+        };
+
+        var reData = {
+            x : 10,
+            y : 220,
+            ar : ["222", "333"]
+        };
+
+        Option.SubmitDataAsUserOption = function(alerts) {
+            assert.deepEqual(alerts, data, "The data is not ok");
+            return optData;
+        };
+
+        httpClientMock.httpRequest = function (opt, cb) {
+            assert.deepEqual(opt, optData, "the option object was missing");
+            cb(reData);
+        };
+
+        var callBack = function(response) {
+            assert.isNotNull(response, "The response was missing");
+            assert.deepEqual(response, reData, "The Data was missing");
+            done();
+        };
+
+        toTest.httpClient = httpClientMock;
+        toTest.userAdminDef.data = Option;
+        toTest.submitDataAsUser(data, callBack);
+    });
+
     it('Shall send search data request for data', function(done) {
 
         var optData = {

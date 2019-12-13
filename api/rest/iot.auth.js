@@ -60,14 +60,6 @@ module.exports = function(config) {
         return module.httpClient.httpRequest(getAuthUserInfoOpt, callback);
     };
 
-    /**
-     *  @description Get refresh token through API:POST/v1/api/auth/refresh
-     *  @param data.token the access token
-     */
-    module.getRefreshToken = function(data, callback) {
-        var getRefreshTokenOpt = new module.userAdminDef.auth.GetRefreshTokenOption(data);
-        return module.httpClient.httpRequest(getRefreshTokenOpt, callback);
-    };
 
     /**
      *  @description Refresh access token through API:PUT/v1/api/auth/refresh
@@ -77,16 +69,6 @@ module.exports = function(config) {
     module.refreshAuthToken = function(data, callback) {
         var refreshAuthTokenOpt = new module.userAdminDef.auth.RefreshAuthTokenOption(data);
         return module.httpClient.httpRequest(refreshAuthTokenOpt, callback);
-    };
-
-    /**
-     *  @description Refresh access token through API:PUT/v1/api/auth/refresh
-     *  @param data.token the access token
-     *  @param data.body.refreshToken the refresh token
-     */
-    module.revokeRefreshToken = function(data, callback) {
-        var revokeRefreshTokenOpt = new module.userAdminDef.auth.RevokeRefreshTokenOption(data);
-        return module.httpClient.httpRequest(revokeRefreshTokenOpt, callback);
     };
 
     return module;
