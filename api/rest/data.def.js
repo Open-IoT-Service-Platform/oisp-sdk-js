@@ -52,6 +52,25 @@ module.exports = function(config) {
     module.SubmitDataOption = SubmitDataOption;
 
 
+    function SubmitDataAsUserOption(data) {
+        var isBinary = common.isBinary(data.body);
+        this.pathname = common.buildPath(api.data.SEND_AS_USER, [data.accountId, data.deviceId]);
+        this.token = data.userToken;
+        ConnectionOptions.call(this);
+        this.method = 'POST';
+        if ( isBinary ) {
+            this.body = cbor.encode(data.body);
+            this.headers["Content-type"] = "application/cbor";
+        } else {
+            this.body =  JSON.stringify(data.body);
+            this.headers["Content-type"] = "application/json";
+        }
+    }
+    SubmitDataAsUserOption.prototype = new ConnectionOptions();
+    SubmitDataAsUserOption.prototype.constructor = SubmitDataAsUserOption;
+    module.SubmitDataAsUserOption = SubmitDataAsUserOption;
+
+
     function SearchDataOption(data) {
         this.pathname = common.buildPath(api.data.SEARCH, data.accountId);
         this.token = data.userToken;
