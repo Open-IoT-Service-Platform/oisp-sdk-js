@@ -41,7 +41,7 @@ function Broker(conf) {
     };
     me.iamHealthyTopic = "server/{hash}/healthy";
     me.isLive = false;
-    me.pingActivate = true;
+    me.pingActivate = false;
     me.client = {
         connected: false,
         end: function() {}
