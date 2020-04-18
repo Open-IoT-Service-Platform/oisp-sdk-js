@@ -65,6 +65,18 @@ module.exports = function(config) {
     GetAuthUserInfoOption.prototype = new ConnectionOptions();
     GetAuthUserInfoOption.prototype.constructor = GetAuthUserInfoOption;
     module.GetAuthUserInfoOption = GetAuthUserInfoOption;
+    
+
+    function RefreshAuthTokenOption(data) {
+        this.pathname = common.buildPath(api.auth.REFRESH_TOKEN);
+        this.token = data.token;
+        ConnectionOptions.call(this);
+        this.method = 'PUT';
+        this.body = JSON.stringify(data.body);
+    }
+    RefreshAuthTokenOption.prototype = new ConnectionOptions();
+    RefreshAuthTokenOption.prototype.constructor = RefreshAuthTokenOption;
+    module.RefreshAuthTokenOption = RefreshAuthTokenOption;
 
     return module;
 }

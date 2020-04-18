@@ -51,7 +51,8 @@ module.exports.alerts = {
 module.exports.auth = {
     TOKEN:                  '/v1/api/auth/token',
     TOKEN_INFO:             '/v1/api/auth/tokenInfo',
-    USER_INFO:              '/v1/api/auth/me'
+    USER_INFO:              '/v1/api/auth/me',
+    REFRESH_TOKEN:          '/v1/api/auth/refresh'
 }
 
 module.exports.cmpcatalog = {
@@ -74,6 +75,7 @@ module.exports.control = {
 
 module.exports.data = {
     SEND:                   '/v1/api/data/{deviceid}',
+    SEND_AS_USER:           '/v1/api/accounts/{accountId}/data/{deviceId}',
     SEARCH:                 '/v1/api/accounts/{accountId}/data/search',
     SEARCH_ADVANCED:        '/v1/api/accounts/{accountId}/data/search/advanced'
 }

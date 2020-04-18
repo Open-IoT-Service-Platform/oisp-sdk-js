@@ -26,13 +26,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 module.exports = function(config) {
     var module = {};
-    
+
     module.httpClient = require('../../lib/httpClient');
     module.userAdminDef = require('./admin.def')(config);
-    
+
     /**
      *  @description Sends data to cloud through API:POST/v1/api/data/{deviceId}
-     *  @param data.body the data JSON object according to the API spec for this call 
+     *  @param data.body the data JSON object according to the API spec for this call
      *  @param data.userToken contains the access token
      *  @param data.deviceId id of the device which sends the data
      */
@@ -43,8 +43,21 @@ module.exports = function(config) {
 
 
     /**
+     *  @description Sends data to cloud through API:POST/v1/api/data/{deviceId}
+     *  @param data.body the data JSON object according to the API spec for this call
+     *  @param data.userToken contains the access token
+     *  @param data.deviceId id of the device which sends the data
+     *  @param data.accountId id of account that owns the device
+     */
+    module.submitDataAsUser = function(data, callback) {
+        var submitDataAsUserOpt = new module.userAdminDef.data.SubmitDataAsUserOption(data);
+        return module.httpClient.httpRequest(submitDataAsUserOpt, callback);
+    };
+
+
+    /**
      *  @description Retrieve data from cloud through API:POST/v1/api/accounts/{accountId}/data/search
-     *  @param data.body the detail of the search data JSON object according to the API spec for this call 
+     *  @param data.body the detail of the search data JSON object according to the API spec for this call
      *  @param data.userToken contains the access token
      *  @param data.accountId id of the account where the search is performed
      */
@@ -56,7 +69,7 @@ module.exports = function(config) {
 
     /**
      *  @description Retrieve data from cloud through advanced API:POST/v1/api/accounts/{accountId}/data/search/advanced
-     *  @param data.body the detail of the search data JSON object according to the API spec for this call 
+     *  @param data.body the detail of the search data JSON object according to the API spec for this call
      *  @param data.userToken contains the access token
      *  @param data.accountId id of the account where the search is performed
      */
