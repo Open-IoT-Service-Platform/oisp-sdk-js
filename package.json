@@ -24,7 +24,7 @@
   "dependencies": {
     "async": "^3.1.0",
     "borc": "^2.1.1",
-    "mqtt" : "^3.0.0",
+    "mqtt": "^3.0.0",
     "request": "^2.88.0",
     "tunnel": "0.0.6",
     "websocket": "^1.0.29"
