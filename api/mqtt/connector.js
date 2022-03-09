@@ -17,83 +17,27 @@
 "use strict";
 var mqtt = require('mqtt');
 var events = require('events');
-var common = require('../../lib/common');
 
 function Broker(conf) {
     var me = this;
     me.host = conf.host;
     me.port = conf.port;
-    me.key = conf.key;
-    me.cert = conf.cert;
-    me.ca = conf.ca;
     me.secure = conf.secure;
     me.keepalive = conf.keepalive || 60;
-    me.crd = {
-        username: conf.username,
-        password: conf.password
-    };
     me.max_retries = conf.retries || 30;
     me.messageHandler = [];
-    me.topics = conf.topics;
     me.pubArgs = {
         qos: conf.qos || 1,
         retain: conf.retain
     };
-    me.iamHealthyTopic = "server/{hash}/healthy";
     me.isLive = false;
-    me.pingActivate = false;
     me.client = {
         connected: false,
         end: function() {}
     };
-    me.setCredential = function (newCrd) {
-        me.crd = newCrd || me.crd;
-        me.credential = {
-            username: me.crd.username,
-            password: me.crd.password,
-            keepalive: me.keepalive
-        };
-    };
-    me.setCredential();
-    me.checkConnection = function () {
-        var me = this;
-        var retries = 0;
-        var hash = new Date().getTime();
-        var healthyTopic = common.buildPath(me.iamHealthyTopic, hash);
-        var receivingPing = function () {
-            me.isLive = true;
-        };
-        var sendPing = function () {
-            retries = 0;
-            me.isLive = false;
-            waitForPong();
-            var da = {'ping': new Date().getTime()};
-            me.publish(healthyTopic, da);
-        };
-        var waitForPong = function () {
-            if (!me.isLive) {
-                retries++;
-                if (retries < 10) {
-                    setTimeout(waitForPong, 1500);
-                } else {
-                    me.unbind(healthyTopic);
-                    me.emit("reconnect");
-                }
-                return false;
-            }
-            setTimeout(sendPing, 30000);
-            return true;
-        };
-        function bindingPing () {
-            me.bind(healthyTopic, receivingPing, function () {
-                sendPing();
-            });
-        }
-        me.on('reconnect', function() {
-            bindingPing();
-        });
-        bindingPing();
-        return true;
+    me.deviceInfo = {};
+    me.updateDeviceInfo = function(deviceInfo) {
+        me.deviceInfo = deviceInfo;
     };
     me.listen = function () {
         me.client.on('message',function(topic, message) {
@@ -105,9 +49,6 @@ function Broker(conf) {
 
             me.onMessage(topic, message);
         });
-        if (me.pingActivate) {
-            me.checkConnection();
-        }
     };
     me.connect = function (done) {
         var retries = 0;
@@ -115,13 +56,13 @@ function Broker(conf) {
             if ((me.client instanceof mqtt.MqttClient) === false) {
                 if (me.secure === false) {
                     me.client = mqtt.connect('mqtt://' + me.host + ':' + me.port, {
-                        username: me.crd.username,
-                        password: me.crd.password
+                        username: me.deviceInfo.device_id,
+                        password: me.deviceInfo.device_token
                     });
                 } else {
                     me.client = mqtt.connect('mqtts://' + me.host + ":" + me.port, {
-                        username: me.crd.username,
-                        password: me.crd.password,
+                        username: me.deviceInfo.device_id,
+                        password: me.deviceInfo.device_token,
                         rejectUnauthorized: false
                     });
                 }
