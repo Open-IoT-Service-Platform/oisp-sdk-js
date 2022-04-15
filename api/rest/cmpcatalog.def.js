@@ -32,7 +32,8 @@ module.exports = function(config) {
     var module = {};
 
     function DeviceCatalogOption(data) {
-        this.pathname = api.cmpcatalog.GET_CATALOG;
+        this.pathname = api.cmpcatalog.GET_CATALOG_FULL;
+        this.qs = { full:'true' };
         this.token = data.deviceToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
@@ -42,7 +43,8 @@ module.exports = function(config) {
     module.DeviceCatalogOption = DeviceCatalogOption;
 
     function CatalogOption(data) {
-        this.pathname = common.buildPath(api.cmpcatalog.GET_CATALOG_FULL, data.accountId);
+        this.pathname = common.buildPath(api.cmpcatalog.GET_CATALOG_USER_FULL, data.accountId);
+        this.qs = { full:'true' };
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
@@ -52,7 +54,7 @@ module.exports = function(config) {
     module.CatalogOption = CatalogOption;
 
     function CreateCatalogOption(data) {
-        this.pathname = common.buildPath(api.cmpcatalog.CREATE_CATALOG_FULL, data.accountId);
+        this.pathname = common.buildPath(api.cmpcatalog.CREATE_CATALOG, data.accountId);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'POST';
@@ -63,7 +65,8 @@ module.exports = function(config) {
     module.CreateCatalogOption = CreateCatalogOption;
 
     function DeviceCatalogDetailOption(data) {
-        this.pathname =  common.buildPath(api.cmpcatalog.GET_COMPONENT, data.componentId);
+        this.pathname =  common.buildPath(api.cmpcatalog.GET_CMP_FULL, data.componentId);
+        this.qs = { full:'true' };
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
@@ -73,7 +76,8 @@ module.exports = function(config) {
     module.DeviceCatalogDetailOption = DeviceCatalogDetailOption;
 
     function CatalogDetailOption(data) {
-        this.pathname =  common.buildPath(api.cmpcatalog.GET_COMPONENT_FULL, [data.accountId, data.componentId]);
+        this.pathname =  common.buildPath(api.cmpcatalog.GET_CMP_USER_FULL, [data.accountId, data.componentId]);
+        this.qs = { full:'true' };
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'GET';
@@ -83,7 +87,7 @@ module.exports = function(config) {
     module.CatalogDetailOption = CatalogDetailOption;
 
     function UpdateCatalogOption(data) {
-        this.pathname = common.buildPath(api.cmpcatalog.UPDATE_COMPONENT_FULL, [data.accountId, data.componentId]);
+        this.pathname = common.buildPath(api.cmpcatalog.UPDATE_CMP, [data.accountId, data.componentId]);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'PUT';
