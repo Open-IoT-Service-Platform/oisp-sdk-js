@@ -85,8 +85,8 @@ module.exports.data = {
 }
 
 module.exports.device = {
-    ACTIVATE:               '/v1/api/devices/{deviceid}/activation',
-    ACTIVATE_FULL:          '/v1/api/accounts/{accountid}/devices/{deviceid}/activation',
+    ACTIVATE:               '/v1/api/devices/register',
+    ACTIVATE_FULL:          '/v1/api/accounts/{accountid}/register',
     GET:                    '/v1/api/devices/{deviceid}',
     GET_ALL:                '/v1/api/accounts/{accountid}/devices',
     GET_DETAILS:            '/v1/api/accounts/{accountid}/devices/{deviceid}',
