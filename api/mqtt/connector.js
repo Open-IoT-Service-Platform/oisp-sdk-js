@@ -18,10 +18,16 @@
 var mqtt = require('mqtt');
 var events = require('events');
 
+var MQTT = 'mqtt://';
+var MQTT_SECURE = 'mqtts://';
+var WEBSOCKETS = 'ws://';
+var WEBSOCKETS_SECURE = 'wss://';
+
 function Broker(conf) {
     var me = this;
     me.host = conf.host;
     me.port = conf.port;
+    me.websockets = conf.websockets;
     me.secure = conf.secure;
     me.keepalive = conf.keepalive || 60;
     me.max_retries = conf.retries || 30;
@@ -54,18 +60,22 @@ function Broker(conf) {
         var retries = 0;
         try {
             if ((me.client instanceof mqtt.MqttClient) === false) {
-                if (me.secure === false) {
-                    me.client = mqtt.connect('mqtt://' + me.host + ':' + me.port, {
-                        username: me.deviceInfo.device_id,
-                        password: me.deviceInfo.device_token
-                    });
-                } else {
-                    me.client = mqtt.connect('mqtts://' + me.host + ":" + me.port, {
-                        username: me.deviceInfo.device_id,
-                        password: me.deviceInfo.device_token,
-                        rejectUnauthorized: false
-                    });
+                var protocol = MQTT;
+                if (me.secure) {
+                    protocol = MQTT_SECURE;
                 }
+                if (me.websockets) {
+                    if (me.secure) {
+                        protocol = WEBSOCKETS_SECURE;
+                    } else {
+                        protocol = WEBSOCKETS;
+                    }
+                }
+                me.client = mqtt.connect(protocol + me.host + ':' + me.port, {
+                    username: me.deviceInfo.device_id,
+                    password: me.deviceInfo.device_token,
+                    rejectUnauthorized: false
+                });
             }
         } catch(e) {
             done(new Error("Connection Error", 1002));
