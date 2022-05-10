@@ -89,7 +89,7 @@ describe(fileToTest, function() {
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
-        assert.equal(urD.pathname, "/v1/api/accounts/20000/cmpcatalog", "path improper formed");
+        assert.equal(urD.pathname, "/v1/api/accounts/20000/cmpcatalog%3Ffull=true", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "GET", "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
@@ -162,7 +162,7 @@ describe(fileToTest, function() {
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
-        assert.equal(urD.pathname, "/v1/api/cmpcatalog/1000", "path improper formed");
+        assert.equal(urD.pathname, "/v1/api/cmpcatalog/1000%3Ffull=true", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "GET", "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
@@ -197,7 +197,7 @@ describe(fileToTest, function() {
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
-        assert.equal(urD.pathname, "/v1/api/accounts/20000/cmpcatalog/1000", "path improper formed");
+        assert.equal(urD.pathname, "/v1/api/accounts/20000/cmpcatalog/1000%3Ffull=true", "path improper formed");
         assert.equal(deTest.body, null);
         assert.equal(deTest.method, "GET", "The verb is incorrect");
         assert.isObject(deTest.headers, "Shall be an Object with a Key-Value for HTTP Header");
