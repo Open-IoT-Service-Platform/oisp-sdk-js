@@ -29,7 +29,7 @@ Data message looks like below:
             }],
             seq: 1
          };
-    ```
+```
 
 
 ## License
