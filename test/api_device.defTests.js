@@ -64,9 +64,9 @@ describe(fileToTest, function() {
         var urD = url.parse(deTest.url);
         assert.equal(urD.hostname, config.connector.rest.host, "the host data is missing");
         assert.equal(urD.port,  config.connector.rest.port, "the port were missing");
-        assert.equal(urD.pathname, "/v1/api/devices/register", "path improper formed");
+        assert.equal(urD.pathname, "/v1/api/devices/20000/activation", "path improper formed");
         assert.equal(deTest.body, JSON.stringify(data.body));
-        assert.equal(deTest.method, "POST", "The verb is incorrect");
+        assert.equal(deTest.method, "PUT", "The verb is incorrect");
         done();
     });
     it('Shall Return the DeviceMetadataOption for Request  >', function(done) {

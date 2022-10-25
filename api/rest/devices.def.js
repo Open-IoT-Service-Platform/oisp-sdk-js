@@ -93,7 +93,7 @@ module.exports = function(config) {
 
 
     function ActivateDeviceOption(data) {
-        this.pathname = common.buildPath(api.device.ACTIVATE_FULL, data.accountId);
+        this.pathname = common.buildPath(api.device.ACTIVATE_FULL, [data.accountId, data.deviceId]);
         this.token = data.userToken;
         ConnectionOptions.call(this);
         this.method = 'POST';
@@ -129,10 +129,10 @@ module.exports = function(config) {
 
 
     function DeviceActivateOption(data) {
-        this.pathname = common.buildPath(api.device.ACTIVATE);
+        this.pathname = common.buildPath(api.device.ACTIVATE, data.deviceId);
         this.token = null;
         ConnectionOptions.call(this);
-        this.method = 'POST';
+        this.method = 'PUT';
         this.body =  JSON.stringify(data.body);
     }
     DeviceActivateOption.prototype = new ConnectionOptions();
