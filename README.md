@@ -1,6 +1,6 @@
 # OISP SDK for Node.js
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpen-IoT-Service-Platform%2Foisp-sdk-js.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FOpen-IoT-Service-Platform%2Foisp-sdk-js?ref=badge_shield)
-
+# NOTE: This project reached end of support and is no longer maintained. Parts of the project are continued in https://github.com/IndustryFusion/DigitalTwin.
 
 ## SparkPlugB standard support added
 
